@@ -1,4 +1,5 @@
-﻿  MyMapleStory.cpp
+﻿  glad.c
+  MyMapleStory.cpp
 C:\OpenGL\includes\stb_image.h(568,11): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
 C:\OpenGL\includes\stb_image.h(576,19): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
 C:\OpenGL\includes\stb_image.h(622,11): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
@@ -56,5 +57,8 @@ C:\OpenGL\includes\stb_image.h(4281,26): warning C4312: '형식 캐스트': 'int
 C:\OpenGL\includes\stb_image.h(4286,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
 C:\OpenGL\includes\stb_image.h(4290,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
 C:\OpenGL\includes\stb_image.h(4339,69): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\Users\minjae\source\repos\MyMapleStory\MyMapleStory\MyMapleStory.cpp(160,27): warning C4101: 'texture2' :참조되지 않은 지역 변수입니다.
-  MyMapleStory.vcxproj -> C:\Users\minjae\source\repos\MyMapleStory\x64\Debug\MyMapleStory.exe
+C:\Users\minjae\Documents\Mine\Github\OpenGL_MMS\MyMapleStory\MyMapleStory\MyMapleStory.cpp(160,27): warning C4101: 'texture2' :참조되지 않은 지역 변수입니다.
+  process_input.cpp
+  textureLoader.cpp
+  코드를 생성하고 있습니다...
+  MyMapleStory.vcxproj -> C:\Users\minjae\Documents\Mine\Github\OpenGL_MMS\MyMapleStory\x64\Debug\MyMapleStory.exe
