@@ -156,19 +156,20 @@ int main() {
 
 
 
-    // --Texture--
-    unsigned int texture, texture2;
-    std::vector<unsigned int> vec_textureIdle;
+    //-----------
+    // <Texture>
+    //unsigned int texture;
     int texture_width, texture_height, nrChannels;
 
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    //glGenTextures(1, &texture);
+    //glBindTexture(GL_TEXTURE_2D, texture);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    //test - idle texture ; 3 sprites
+
+    // Idle : 3(+1) sprites
     for (int i = 0; i < 3; i++) {
         unsigned int tmpTex;
         glGenTextures(1, &tmpTex);
@@ -178,9 +179,7 @@ int main() {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-
-        std::string folder_path = "Resources/avatar/avatar_idle_" + std::to_string(i+1) + ".png";
-
+        std::string folder_path = "Resources/avatar/avatar_idle_" + std::to_string(i + 1) + ".png";
 
         unsigned char* tmpData = stbi_load(folder_path.c_str(), &texture_width, &texture_height, &nrChannels, 0);
 
@@ -195,10 +194,38 @@ int main() {
             std::cout << "ERROR::TEXTURE::LOADING_FALIED\n--path: " << folder_path << "\n";
         }
 
-        vec_textureIdle.push_back(tmpTex);
+        vector_textureIdle.push_back(tmpTex);
     }
-    vec_textureIdle.push_back(vec_textureIdle[1]);
+    vector_textureIdle.push_back(vector_textureIdle[1]);
 
+
+    // Walk : 4 sprites
+    for (int i = 0; i < 4; i++) {
+        unsigned int tmpTex;
+        glGenTextures(1, &tmpTex);
+        glBindTexture(GL_TEXTURE_2D, tmpTex);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+        std::string folder_path = "Resources/avatar/avatar_walk_" + std::to_string(i + 1) + ".png";
+
+        unsigned char* tmpData = stbi_load(folder_path.c_str(), &texture_width, &texture_height, &nrChannels, 0);
+
+        if (tmpData) {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);  // Set pixel store mode
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tmpData);
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            stbi_image_free(tmpData);
+        }
+        else {
+            std::cout << "ERROR::TEXTURE::LOADING_FALIED\n--path: " << folder_path << "\n";
+        }
+
+        vector_textureWalk.push_back(tmpTex);
+    }
 
 
 
@@ -258,27 +285,16 @@ int main() {
 
 
 
-    //anim test
-    double dt = 0;
-    int ci = 0;
-    glBindTexture(GL_TEXTURE_2D, vec_textureIdle[ci]);
+    // init Texture
+    glBindTexture(GL_TEXTURE_2D, vector_textureIdle[0]);
+    SetAnim(ANIM_IDLE);
 
     // Rendering Loop (Frame)
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
-
         // Input
         processInput(window);
         testMove(window, trans);
-
-        dt += deltaTime;
-        if (dt > .57f) {
-            dt = 0;
-            ci += ci == 3 ? -3 : 1;
-            glBindTexture(GL_TEXTURE_2D, vec_textureIdle[ci]);
-
-            std::cout << "change img to idle_" << (ci + 1) << "\n";
-        }
 
 
         // --Rendering Codes--
@@ -286,12 +302,23 @@ int main() {
         glClearColor(clearColour[0], clearColour[1], clearColour[2], 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+
         //// Bind Texture
         //glActiveTexture(GL_TEXTURE_2D);
         //glBindTexture(GL_TEXTURE_2D, texture2);
 
         // Draw Figure
         glUseProgram(shaderProgramme);
+
+
+
+        // Play Animation
+        PlayAnim();
+
+
+
+
+
 
 
         // --transform--
@@ -370,35 +397,46 @@ void processInput(GLFWwindow* window) {
 }
 
 void testMove(GLFWwindow* window, glm::mat4 m) {
-
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS && !isKey_Left_Pressed) {
         if (!isKey_Right_Pressed) {
             isKey_Right_Pressed = true;
             testFaceRight(true);
+
+            if(!isJumping)
+                SetAnim(ANIM_WALK);
         }
 
-        matTranslate = glm::translate(matTranslate, glm::vec3(1.f, 0.f, 0.f) * (float)deltaTime);
+        matTranslate = glm::translate(matTranslate, vec_walkUnit * (float)(deltaTime * mainCharacter_speed));
         trans = matTranslate * matScale;
     }
     else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_RELEASE && isKey_Right_Pressed) {
         isKey_Right_Pressed = false;
+
+        if (!isJumping)
+            SetAnim(ANIM_IDLE);
     }
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS && !isKey_Right_Pressed) {
         if (!isKey_Left_Pressed) {
             isKey_Left_Pressed = true;
             testFaceRight(false);
+
+            if (!isJumping)
+                SetAnim(ANIM_WALK);
         }
 
-        matTranslate = glm::translate(matTranslate, glm::vec3(-1.f, 0.f, 0.f) * (float)deltaTime);
+        matTranslate = glm::translate(matTranslate, vec_walkUnit * (float)(deltaTime * -mainCharacter_speed));
         trans = matTranslate * matScale;
     }
     else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_RELEASE && isKey_Left_Pressed) {
         isKey_Left_Pressed = false;
+
+        if (!isJumping)
+            SetAnim(ANIM_IDLE);
     }
 }
 
-void testFaceRight(bool b)
-{
+void testFaceRight(bool b){
     if (!isFacingRight && b) {
         isFacingRight = true;
         matScale = glm::scale(glm::mat4(1.f), glm::vec3(-1.f, 1.f, 1.f));
@@ -408,6 +446,48 @@ void testFaceRight(bool b)
         matScale = glm::mat4(1.f);
     }
 }
+
+
+void PlayAnim() {
+    dt_anim += deltaTime;
+
+    if (dt_anim > timeToChangeTexture) {
+        dt_anim = 0;
+        index_animTex == (numOfSprites - 1) ? index_animTex = 0 : index_animTex++;
+
+        glBindTexture(GL_TEXTURE_2D, vector_textureCurrent[index_animTex]);
+    }
+}
+
+void SetAnim(AnimType aType) {
+    switch (aType)
+    {
+    case ANIM_IDLE:
+        vector_textureCurrent = vector_textureIdle;
+        timeToChangeTexture = 0.57f;
+        break;
+    case ANIM_WALK:
+        vector_textureCurrent = vector_textureWalk;
+        timeToChangeTexture = 0.15f;
+        break;
+    case ANIM_JUMP:
+        break;
+    default:
+        break;
+    }
+
+
+    numOfSprites = vector_textureCurrent.size();
+    dt_anim = 0;
+    index_animTex = 0;
+
+    glBindTexture(GL_TEXTURE_2D, vector_textureCurrent[0]);
+
+    if (numOfSprites != 0)
+        index_animTex++;
+
+}
+
 
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

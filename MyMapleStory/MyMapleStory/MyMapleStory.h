@@ -17,26 +17,38 @@
 
 
 
-// --Dev setting & variables--
+//---------------------------
+// <Dev setting & variables>
 const bool isWireFrameModeOn = false;
 const float clearColour[] = { 0.52f, 0.49f, 0.53f };
 
-// variables for calculate fps
+// Calculate fps, deltaTime
 int frameCount = 0;
 double currentTime = 0;
 double lastTime = 0;
 double lastTimeInFrame = 0;
 double deltaTime;
 
-// variables for input
+// Input
 bool isKey_Right_Pressed = false;
 bool isKey_Left_Pressed = false;
 bool isKey_Spacebar_Pressed = false;
 
-// etc
+// Variable for movement
 bool isFacingRight = false;
+bool isJumping = false;
+glm::vec3 vec_walkUnit(0.003f, 0, 0);
 
-// --Basic setting--
+// Anim
+double timeToChangeTexture = .57f;
+double dt_anim = 0;
+int index_animTex = 0;
+
+enum AnimType{ANIM_IDLE = 0, ANIM_WALK, ANIM_JUMP};
+
+
+//-----------------
+// <Basic setting>
 // Window
 const int window_width = 1024;
 const int window_height = 512;
@@ -46,6 +58,17 @@ const char* image_path = "Resources/testChar.png";
 // MainCharacter
 float mainCharacter_width_ratio;
 float mainCharacter_height_ratio;
+// └> Texture
+int numOfSprites;
+
+std::vector<unsigned int> vector_textureCurrent;
+std::vector<unsigned int> vector_textureIdle;
+std::vector<unsigned int> vector_textureWalk;
+std::vector<unsigned int> vector_textureJump;
+// └> Status
+int mainCharacter_speed = 160;
+float mainCharacter_jumpPower;
+
 
 // Shaders
 const char* vertexShaderSrc =
@@ -94,8 +117,8 @@ glm::mat4 matScale(1.0f);
 
 
 
-
-// --Functions--
+//------------
+// <Function>
 void SetMainCharacterSize();
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -104,6 +127,11 @@ void calculateFPS();
 // Input
 void processInput(GLFWwindow* window);
 
-//m 왜필요?
+// Movement
+// m 왜필요?
 void testMove(GLFWwindow* window, glm::mat4 m);
 void testFaceRight(bool b);
+
+// Texture Anim
+void PlayAnim();
+void SetAnim(AnimType aName);
