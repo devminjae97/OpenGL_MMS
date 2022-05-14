@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyMapleStory", "MyMapleStory\MyMapleStory.vcxproj", "{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Debug|x64.ActiveCfg = Debug|x64
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Debug|x64.Build.0 = Debug|x64
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Debug|x86.ActiveCfg = Debug|Win32
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Debug|x86.Build.0 = Debug|Win32
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Release|x64.ActiveCfg = Release|x64
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Release|x64.Build.0 = Release|x64
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Release|x86.ActiveCfg = Release|Win32
+		{65019BAD-77C7-4EA4-A10F-3650AB1DFA46}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {170A5197-EE94-49F9-91F2-A446E5ABA788}
+	EndGlobalSection
+EndGlobal
