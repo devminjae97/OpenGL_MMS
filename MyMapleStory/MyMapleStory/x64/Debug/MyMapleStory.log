@@ -1,64 +1,79 @@
 ﻿  glad.c
   MyMapleStory.cpp
-C:\OpenGL\includes\stb_image.h(568,11): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(576,19): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(622,11): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(644,19): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(868,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(906,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(924,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(1835,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(1864,65): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(1882,46): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(2856,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(2981,49): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(2987,66): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(2995,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(2997,25): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3005,50): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3040,26): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3043,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3064,21): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3067,58): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3078,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3116,53): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3306,26): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3327,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3332,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3474,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3478,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3486,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3494,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3507,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3524,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3528,21): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3671,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3699,17): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3710,38): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3711,38): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3725,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3744,46): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3762,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3773,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3782,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3809,27): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(3810,34): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4024,31): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4028,48): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4033,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4044,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4073,52): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4080,52): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4097,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4127,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4160,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4272,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4281,26): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4286,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4290,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\OpenGL\includes\stb_image.h(4339,69): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
-C:\Users\minjae\Documents\Mine\Github\OpenGL_MMS\MyMapleStory\MyMapleStory\MyMapleStory.cpp(160,27): warning C4101: 'texture2' :참조되지 않은 지역 변수입니다.
+D:\OpenGL\includes\stb_image.h(568,11): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(576,19): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(622,11): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(644,19): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(868,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(906,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(924,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(1835,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(1864,65): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(1882,46): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(2856,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(2981,49): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(2987,66): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(2995,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(2997,25): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3005,50): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3040,26): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3043,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3064,21): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3067,58): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3078,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3116,53): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3306,26): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3327,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3332,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3474,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3478,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3486,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3494,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3507,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3524,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3528,21): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3671,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3699,17): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3710,38): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3711,38): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3725,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3744,46): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3762,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3773,32): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3782,45): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3809,27): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(3810,34): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4024,31): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4028,48): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4033,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4044,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4073,52): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4080,52): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4097,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4127,23): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4160,20): warning C4312: '형식 캐스트': 'int'에서 더 큰 'unsigned char *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4272,14): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4281,26): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4286,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4290,42): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\OpenGL\includes\stb_image.h(4339,69): warning C4312: '형식 캐스트': 'int'에서 더 큰 'float *'(으)로의 변환입니다.
+D:\Github\Projects\OpenGL_MMS\MyMapleStory\MyMapleStory\MyMapleStory.cpp(160,27): warning C4101: 'texture2' :참조되지 않은 지역 변수입니다.
   process_input.cpp
   textureLoader.cpp
   코드를 생성하고 있습니다...
-  MyMapleStory.vcxproj -> C:\Users\minjae\Documents\Mine\Github\OpenGL_MMS\MyMapleStory\x64\Debug\MyMapleStory.exe
+glfw3.lib(context.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(context.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(init.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(init.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(input.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(input.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(monitor.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(monitor.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(vulkan.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(vulkan.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(window.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(window.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_init.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(win32_init.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_joystick.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(win32_joystick.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_monitor.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(win32_monitor.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_time.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(win32_time.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_thread.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(win32_thread.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(win32_window.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(win32_window.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(wgl_context.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(wgl_context.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(egl_context.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(egl_context.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+glfw3.lib(osmesa_context.obj) : warning LNK4099: 'glfw3.pdb' PDB를 'glfw3.lib(osmesa_context.obj)' 또는 'D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\glfw3.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+  MyMapleStory.vcxproj -> D:\Github\Projects\OpenGL_MMS\MyMapleStory\x64\Debug\MyMapleStory.exe
