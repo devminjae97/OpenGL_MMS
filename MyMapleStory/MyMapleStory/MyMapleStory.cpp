@@ -482,10 +482,6 @@ void SetAnim(AnimType aType) {
     index_animTex = 0;
 
     glBindTexture(GL_TEXTURE_2D, vector_textureCurrent[0]);
-
-    if (numOfSprites != 0)
-        index_animTex++;
-
 }
 
 
