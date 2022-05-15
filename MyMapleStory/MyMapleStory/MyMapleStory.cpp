@@ -289,6 +289,14 @@ int main() {
     glBindTexture(GL_TEXTURE_2D, vector_textureIdle[0]);
     SetAnim(ANIM_IDLE);
 
+
+    //test
+
+    glm::mat4 tMat = glm::translate(glm::mat4(1.0f), glm::vec3(.4f, 0.f, 0.f));
+    trans = tMat;
+
+
+
     // Rendering Loop (Frame)
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
@@ -468,7 +476,7 @@ void SetAnim(AnimType aType) {
         break;
     case ANIM_WALK:
         vector_textureCurrent = vector_textureWalk;
-        timeToChangeTexture = 0.15f;
+        timeToChangeTexture = -0.001875 * mainCharacter_speed + 0.45f;  // 160->0.15f, 80->0.3f
         break;
     case ANIM_JUMP:
         break;

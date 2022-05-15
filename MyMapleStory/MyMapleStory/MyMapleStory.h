@@ -37,7 +37,7 @@ bool isKey_Spacebar_Pressed = false;
 // Variable for movement
 bool isFacingRight = false;
 bool isJumping = false;
-glm::vec3 vec_walkUnit(0.003f, 0, 0);
+glm::vec3 vec_walkUnit(0.0025f, 0, 0);
 
 // Anim
 double timeToChangeTexture = .57f;
