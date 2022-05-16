@@ -27,11 +27,11 @@
     <ClCompile Include="textureLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="shader.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="process_input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -39,6 +39,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="MyMapleStory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
