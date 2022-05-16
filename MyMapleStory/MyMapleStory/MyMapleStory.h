@@ -14,6 +14,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#include "shader.h"
+
 
 
 
@@ -50,10 +52,10 @@ enum AnimType{ANIM_IDLE = 0, ANIM_WALK, ANIM_JUMP};
 //-----------------
 // <Basic setting>
 // Window
-const int window_width = 1024;
-const int window_height = 512;
+int window_width = 1024;
+int window_height = 512;
 const char* window_name = "MyMapleStory";
-const char* image_path = "Resources/testChar.png";
+//const char* image_path = "Resources/testChar.png";
 
 // MainCharacter
 float mainCharacter_width_ratio;

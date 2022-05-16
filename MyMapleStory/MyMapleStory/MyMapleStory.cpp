@@ -10,18 +10,6 @@
  * 
  * 
  * 
- * 
- * 220510 - 사각형 띄움(texture 미포함)
- * 220511 - 캐릭터 texture 추가
- * 220513 - fps, deltaTime, 단순 좌우이동 기능 추가 (함수 정리 필요)
- * 
- * ----------------
- * 
- * 중단점:
- * 2-5::Uniform << 공부해야함
- * 2-7::transform (translate 위주일듯)
- * 
- * 
  * 참고) https://heinleinsgame.tistory.com/3?category=757483
  * 기타) Change booting logo:https://gall.dcinside.com/mgallery/board/view/?id=laptop&no=588941
  * 
@@ -64,7 +52,7 @@ int main() {
     //glViewport(0, 0, window_width, window_height); // (left, bottom, right, top)
 
 
-
+    /*
     // --Compile shader programme--
     // Vertex Shader
     unsigned int vertexShader;
@@ -106,8 +94,11 @@ int main() {
     // We Don't need these shader objects anymore.
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+    */
 
 
+    //test shaders
+    Shader mShader("Shaders/vShader.vs", "Shaders/fShader.fs");
 
 
 
@@ -290,13 +281,6 @@ int main() {
     SetAnim(ANIM_IDLE);
 
 
-    //test
-
-    glm::mat4 tMat = glm::translate(glm::mat4(1.0f), glm::vec3(.4f, 0.f, 0.f));
-    trans = tMat;
-
-
-
     // Rendering Loop (Frame)
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
@@ -316,8 +300,10 @@ int main() {
         //glBindTexture(GL_TEXTURE_2D, texture2);
 
         // Draw Figure
-        glUseProgram(shaderProgramme);
 
+        //test
+        //glUseProgram(shaderProgramme);
+        mShader.use();
 
 
         // Play Animation
@@ -331,8 +317,12 @@ int main() {
 
         // --transform--
         // Set model translate matrix
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgramme, "model"), 1, GL_FALSE, glm::value_ptr(trans));
 
+        //test
+        //glUniformMatrix4fv(glGetUniformLocation(shaderProgramme, "model"), 1, GL_FALSE, glm::value_ptr(trans));
+
+        //glUniformMatrix4fv(glGetUniformLocation(1, "model"), 1, GL_FALSE, glm::value_ptr(trans));
+        mShader.setMat4("model", trans);
 
 
 
@@ -342,8 +332,9 @@ int main() {
         glBindVertexArray(VAO);
         //glDrawArrays(GL_TRIANGLES, 0, 3);   // 3 vertices
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);   // 6 vertices (2 triangles), 0 offset
-        
 
+
+        
 
         // Swap Buffers
         glfwSwapBuffers(window);
@@ -371,8 +362,6 @@ void SetMainCharacterSize() {
     const int unit = 128;
     mainCharacter_width_ratio = (float)unit / window_width;
     mainCharacter_height_ratio = (float)unit / window_height;
-
-    std::cout << mainCharacter_width_ratio << "/" << mainCharacter_height_ratio << "\n";
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
