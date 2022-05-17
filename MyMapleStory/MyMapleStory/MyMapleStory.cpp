@@ -98,7 +98,9 @@ int main() {
 
 
     //test shaders
-    Shader mShader("Shaders/vShader.vs", "Shaders/fShader.fs");
+    Shader mShader("Shaders/characterShader.vs", "Shaders/characterShader.fs");
+
+    Shader oShader("Shaders/objectShader.vs", "Shaders/objectShader.fs");
 
 
 
@@ -109,7 +111,7 @@ int main() {
 
     float vertices[] = {
         mainCharacter_width_ratio, mainCharacter_height_ratio, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
-        mainCharacter_width_ratio, -mainCharacter_height_ratio, 0.0f, .0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
+        mainCharacter_width_ratio, -mainCharacter_height_ratio, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
         -mainCharacter_width_ratio, -mainCharacter_height_ratio, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,   // LB
         -mainCharacter_width_ratio, mainCharacter_height_ratio, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f    // LT
     };  // range >> position: -1 ~ 1/ colour: 0 ~ 1/ texture coord: 0 ~ 1
@@ -119,9 +121,7 @@ int main() {
         1, 2, 3     // 2nd triangle
     };
 
-
-
-    // Vertex Buffer Object, Element Buffer Object, Vertex Array Object
+    // Vertex Buffer Object, Vertex Array Object, Element Buffer Object
     unsigned  int VBO, VAO, EBO;
 
     glGenBuffers(1, &VBO);
@@ -143,6 +143,51 @@ int main() {
     // Texture coord attribute
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
+    
+
+
+
+    // Test Object
+    float oVertices[] = {
+        mainCharacter_width_ratio/2, mainCharacter_height_ratio/2, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
+        mainCharacter_width_ratio/2, -mainCharacter_height_ratio/2, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
+        -mainCharacter_width_ratio/2, -mainCharacter_height_ratio/2, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,   // LB
+        -mainCharacter_width_ratio/2, mainCharacter_height_ratio/2, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f    // LT
+    };  // range >> position: -1 ~ 1/ colour: 0 ~ 1/ texture coord: 0 ~ 1
+
+    unsigned int oIndices[] = {
+        0, 1, 3,    // 1st triangle
+        1, 2, 3     // 2nd triangle
+    };
+
+    glm::mat4 oTrans(1.0f);
+    oTrans = glm::translate(oTrans, glm::vec3(mainCharacter_height_ratio,-mainCharacter_height_ratio / 2,0.f));
+
+    // Vertex Buffer Object, Vertex Array Object, Element Buffer Object
+    unsigned  int oVBO, oVAO, oEBO;
+
+    glGenBuffers(1, &oVBO);
+    glGenBuffers(1, &oEBO);
+    glGenVertexArrays(1, &oVAO);
+    glBindVertexArray(oVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, oVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(oVertices), oVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, oEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(oIndices), oIndices, GL_STATIC_DRAW); 
+
+    // Position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // Colour attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // Texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+
+
 
 
 
@@ -219,6 +264,31 @@ int main() {
     }
 
 
+    // test object
+    unsigned int oTex;
+    glGenTextures(1, &oTex);
+    glBindTexture(GL_TEXTURE_2D, oTex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    std::string object_path = "Resources/test/collision.png";
+
+    unsigned char* oData = stbi_load(object_path.c_str(), &texture_width, &texture_height, &nrChannels, 0);
+
+    if (oData) {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);  // Set pixel store mode
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, oData);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        stbi_image_free(oData);
+    }
+    else {
+        std::cout << "ERROR::TEXTURE::LOADING_FALIED\n--path: " << object_path << "\n";
+    }
+
+
 
 
 
@@ -277,8 +347,13 @@ int main() {
 
 
     // init Texture
+    glBindVertexArray(VAO);
     glBindTexture(GL_TEXTURE_2D, vector_textureIdle[0]);
     SetAnim(ANIM_IDLE);
+
+    glBindVertexArray(oVAO);
+    glBindTexture(GL_TEXTURE_2D, oTex);
+
 
 
     // Rendering Loop (Frame)
@@ -295,43 +370,22 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
 
-        //// Bind Texture
-        //glActiveTexture(GL_TEXTURE_2D);
-        //glBindTexture(GL_TEXTURE_2D, texture2);
+        // Test collision
+        oShader.use();
+        oShader.setMat4("model", oTrans);
+        glBindVertexArray(oVAO);
+        glBindTexture(GL_TEXTURE_2D, oTex);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // Draw Figure
 
-        //test
-        //glUseProgram(shaderProgramme);
+        // Main character
         mShader.use();
-
-
-        // Play Animation
-        PlayAnim();
-
-
-
-
-
-
-
-        // --transform--
-        // Set model translate matrix
-
-        //test
-        //glUniformMatrix4fv(glGetUniformLocation(shaderProgramme, "model"), 1, GL_FALSE, glm::value_ptr(trans));
-
-        //glUniformMatrix4fv(glGetUniformLocation(1, "model"), 1, GL_FALSE, glm::value_ptr(trans));
         mShader.setMat4("model", trans);
-
-
-
-
-
-        
-        glBindVertexArray(VAO);
-        //glDrawArrays(GL_TRIANGLES, 0, 3);   // 3 vertices
+        glBindVertexArray(VAO); 
+        PlayAnim();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);   // 6 vertices (2 triangles), 0 offset
+
+
 
 
         
@@ -451,9 +505,8 @@ void PlayAnim() {
     if (dt_anim > timeToChangeTexture) {
         dt_anim = 0;
         index_animTex == (numOfSprites - 1) ? index_animTex = 0 : index_animTex++;
-
-        glBindTexture(GL_TEXTURE_2D, vector_textureCurrent[index_animTex]);
     }
+    glBindTexture(GL_TEXTURE_2D, vector_textureCurrent[index_animTex]);
 }
 
 void SetAnim(AnimType aType) {
