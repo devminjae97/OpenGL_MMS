@@ -187,6 +187,50 @@ int main() {
     glEnableVertexAttribArray(2);
 
 
+    
+
+    // Test Character collision
+    float cf_width = mainCharacter_width_ratio * 0.25f;
+    float cf_height = mainCharacter_height_ratio * 0.5f;
+
+    float cfVertices[] = {
+        cf_width, cf_height, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
+        cf_width, -cf_height, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
+        -cf_width, -cf_height, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,   // LB
+        -cf_width, cf_height, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f    // LT
+    };  // range >> position: -1 ~ 1/ colour: 0 ~ 1/ texture coord: 0 ~ 1
+
+    unsigned int cfIndices[] = {
+        0, 1, 3,    // 1st triangle
+        1, 2, 3     // 2nd triangle
+    };
+
+    glm::vec3 cfOffset(0.0f,-mainCharacter_height_ratio * 0.5f, 0.f);
+
+    // Vertex Buffer Object, Vertex Array Object, Element Buffer Object
+    unsigned  int cfVBO, cfVAO, cfEBO;
+
+    glGenBuffers(1, &cfVBO);
+    glGenBuffers(1, &cfEBO);
+    glGenVertexArrays(1, &cfVAO);
+    glBindVertexArray(cfVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, cfVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cfVertices), cfVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cfEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cfIndices), cfIndices, GL_STATIC_DRAW); 
+
+    // Position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // Colour attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // Texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+
 
 
 
@@ -294,6 +338,7 @@ int main() {
 
 
 
+
     
     //stbi_set_flip_vertically_on_load(true);
     
@@ -385,7 +430,15 @@ int main() {
         PlayAnim();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);   // 6 vertices (2 triangles), 0 offset
 
+        // Main character collider
+        oShader.use();
 
+        glm::mat4 cfTrans = glm::translate(trans, cfOffset);
+        // ->>>> 중심???
+        oShader.setMat4("model", cfTrans);
+        glBindVertexArray(cfVAO);
+        glBindTexture(GL_TEXTURE_2D, oTex);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 
         

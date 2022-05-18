@@ -146,12 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="MyMapleStory.cpp" />
     <ClCompile Include="process_input.cpp" />
+    <ClCompile Include="shader.cpp" />
     <ClCompile Include="textureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="collision.h" />
     <ClInclude Include="MyMapleStory.h" />
     <ClInclude Include="process_input.h" />
     <ClInclude Include="shader.h" />

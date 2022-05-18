@@ -30,6 +30,9 @@
     <ClCompile Include="shader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="process_input.h">
@@ -42,6 +45,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="shader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
