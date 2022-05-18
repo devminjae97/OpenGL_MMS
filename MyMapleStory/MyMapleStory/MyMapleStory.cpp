@@ -109,6 +109,7 @@ int main() {
 
     SetMainCharacterSize();
 
+    // mainCharacter_width_ratio -> 128*128, 64*64 이런식으로 바꾸긴
     float vertices[] = {
         mainCharacter_width_ratio, mainCharacter_height_ratio, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
         mainCharacter_width_ratio, -mainCharacter_height_ratio, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
@@ -148,11 +149,13 @@ int main() {
 
 
     // Test Object
+    float o_width = mainCharacter_width_ratio * 0.5f;
+    float o_height = mainCharacter_height_ratio * 0.5f;
     float oVertices[] = {
-        mainCharacter_width_ratio/2, mainCharacter_height_ratio/2, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
-        mainCharacter_width_ratio/2, -mainCharacter_height_ratio/2, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
-        -mainCharacter_width_ratio/2, -mainCharacter_height_ratio/2, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,   // LB
-        -mainCharacter_width_ratio/2, mainCharacter_height_ratio/2, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f    // LT
+            o_width, o_height, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
+            o_width, -o_height, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
+            -o_width, -o_height, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,   // LB
+            -o_width, o_height, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f    // LT
     };  // range >> position: -1 ~ 1/ colour: 0 ~ 1/ texture coord: 0 ~ 1
 
     unsigned int oIndices[] = {
@@ -161,7 +164,7 @@ int main() {
     };
 
     glm::mat4 oTrans(1.0f);
-    oTrans = glm::translate(oTrans, glm::vec3(mainCharacter_height_ratio,-mainCharacter_height_ratio / 2,0.f));
+    oTrans = glm::translate(oTrans, glm::vec3(0.25f,-mainCharacter_height_ratio / 2,0.f));
 
     // Vertex Buffer Object, Vertex Array Object, Element Buffer Object
     unsigned  int oVBO, oVAO, oEBO;
@@ -205,7 +208,7 @@ int main() {
         1, 2, 3     // 2nd triangle
     };
 
-    glm::vec3 cfOffset(0.0f,-mainCharacter_height_ratio * 0.5f, 0.f);
+    cfOffset = glm::vec3(0.0f,-mainCharacter_height_ratio * 0.5f, 0.f);
 
     // Vertex Buffer Object, Vertex Array Object, Element Buffer Object
     unsigned  int cfVBO, cfVAO, cfEBO;
@@ -401,7 +404,16 @@ int main() {
 
 
 
+    // test Collision
+    Collision cfCollision(glm::mat4(1.0f), cf_width, cf_height);
+    Collision oCollision(oTrans, o_width, o_height);
+
+    cfTrans = glm::translate(matTranslate, cfOffset);
+
+
     // Rendering Loop (Frame)
+    std::cout << ">> Begin Rendering Loop\n";
+
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
         // Input
@@ -423,6 +435,7 @@ int main() {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 
+
         // Main character
         mShader.use();
         mShader.setMat4("model", trans);
@@ -431,16 +444,22 @@ int main() {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);   // 6 vertices (2 triangles), 0 offset
 
         // Main character collider
+        //glm::mat4 cfTrans = glm::translate(trans, cfOffset); // >> 콜리젼도 같이 뒤집어짐 -> pos 좌표에 오류발생(부호 등)
+        //>> object관리 할 클래스 하나 파고 콜리젼도 같이 관리하는게 좋을듯
         oShader.use();
-
-        glm::mat4 cfTrans = glm::translate(trans, cfOffset);
-        // ->>>> 중심???
         oShader.setMat4("model", cfTrans);
         glBindVertexArray(cfVAO);
         glBindTexture(GL_TEXTURE_2D, oTex);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+        cfCollision.setTrans(cfTrans);
 
+
+
+
+        // Detect collision 
+        // test: object->char
+        oCollision.checkCollision(cfCollision);
         
 
         // Swap Buffers
@@ -485,7 +504,7 @@ void calculateFPS() {
     
     // Print fps per 1 second
     if (timeInterval > 1) {
-        std::cout << "fps: " << frameCount / timeInterval << "\n";
+        //std::cout << "fps: " << frameCount / timeInterval << "\n";
 
         frameCount = 0;
         lastTime = currentTime;
@@ -501,6 +520,7 @@ void processInput(GLFWwindow* window) {
 }
 
 void testMove(GLFWwindow* window, glm::mat4 m) {
+
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS && !isKey_Left_Pressed) {
         if (!isKey_Right_Pressed) {
             isKey_Right_Pressed = true;
@@ -512,6 +532,12 @@ void testMove(GLFWwindow* window, glm::mat4 m) {
 
         matTranslate = glm::translate(matTranslate, vec_walkUnit * (float)(deltaTime * mainCharacter_speed));
         trans = matTranslate * matScale;
+
+
+
+        
+
+        cfTrans = glm::translate(matTranslate, cfOffset);
     }
     else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_RELEASE && isKey_Right_Pressed) {
         isKey_Right_Pressed = false;
@@ -531,6 +557,8 @@ void testMove(GLFWwindow* window, glm::mat4 m) {
 
         matTranslate = glm::translate(matTranslate, vec_walkUnit * (float)(deltaTime * -mainCharacter_speed));
         trans = matTranslate * matScale;
+
+        cfTrans = glm::translate(matTranslate, cfOffset);
     }
     else if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_RELEASE && isKey_Left_Pressed) {
         isKey_Left_Pressed = false;
@@ -538,6 +566,8 @@ void testMove(GLFWwindow* window, glm::mat4 m) {
         if (!isJumping)
             SetAnim(ANIM_IDLE);
     }
+
+
 }
 
 void testFaceRight(bool b){

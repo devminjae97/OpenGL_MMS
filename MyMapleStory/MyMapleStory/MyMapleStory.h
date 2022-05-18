@@ -15,6 +15,7 @@
 #include <stb_image.h>
 
 #include "shader.h"
+#include "collision.h"
 
 
 
@@ -114,8 +115,14 @@ const char* fragmentShaderSrc =
 // mat in loop[step-T]
 glm::mat4 idMat4(1.0f);
 glm::mat4 trans(1.0f);
+
 glm::mat4 matTranslate(1.0f);
 glm::mat4 matScale(1.0f);
+
+// collision
+glm::mat4 cfTrans(1.0f);
+glm::vec3 cfOffset(1.0f);
+
 
 
 
