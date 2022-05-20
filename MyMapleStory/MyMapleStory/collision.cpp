@@ -50,12 +50,12 @@ void Collision::checkCollision(Collision c) {
 	if (abs(x - c.x) < width + c.width && abs(y - c.y) < height + c.height) {
 		// call once
 		if (!isOverlapped) {
-			std::cout << "COLLISION::OVERLAP_BEGIN\n";
+			//std::cout << "COLLISION::OVERLAP_BEGIN\n";
 			isOverlapped = true;
 		}
 	}
 	else if (isOverlapped) {
-		std::cout << "COLLISION::OVERLAP_END\n";
+		//std::cout << "COLLISION::OVERLAP_END\n";
 		isOverlapped = false;
 	}
 }

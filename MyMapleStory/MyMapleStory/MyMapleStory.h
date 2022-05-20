@@ -53,6 +53,7 @@ enum AnimType{ANIM_IDLE = 0, ANIM_WALK, ANIM_JUMP};
 //-----------------
 // <Basic setting>
 // Window
+GLFWwindow* window;
 int window_width = 1024;
 int window_height = 512;
 const char* window_name = "MyMapleStory";
@@ -144,3 +145,4 @@ void testFaceRight(bool b);
 // Texture Anim
 void PlayAnim();
 void SetAnim(AnimType aName);
+

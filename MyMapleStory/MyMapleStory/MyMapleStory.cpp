@@ -26,7 +26,7 @@ int main() {
   
 
     // Create Window Object
-    GLFWwindow* window = glfwCreateWindow(window_width, window_height, window_name, NULL, NULL);
+    window = glfwCreateWindow(window_width, window_height, window_name, NULL, NULL);
 
     if (window == NULL)
     {
@@ -506,6 +506,10 @@ void calculateFPS() {
     if (timeInterval > 1) {
         //std::cout << "fps: " << frameCount / timeInterval << "\n";
 
+        std::string buf = window_name + std::string(" | ") + std::to_string((int)(frameCount/timeInterval)) + std::string(" fps");
+
+        glfwSetWindowTitle(window, buf.c_str());
+
         frameCount = 0;
         lastTime = currentTime;
     }
@@ -616,6 +620,11 @@ void SetAnim(AnimType aType) {
 
     glBindTexture(GL_TEXTURE_2D, vector_textureCurrent[0]);
 }
+
+
+
+
+
 
 
 
