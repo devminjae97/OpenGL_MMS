@@ -1,13 +1,8 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <iostream>
-
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "global.h"
+#include "shader.h"
+#include "texture_loader.h"
 
 
 class Collision {
@@ -18,28 +13,75 @@ private:
 
 	int id;
 
+
+	// Shader
+	Shader* shader;
+
+	// GL variables
+	unsigned  int VBO, VAO, EBO;
+
+	float vertices[32] = {
+		.5f, .5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
+		.5f, -.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,     // RB
+		-.5f, -.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,   // LB
+		-.5f, .5f, 0.0f, 0.5f, 0.0f, 0.5f, 0.0f, 1.0f    // LT
+	};  // range >> position: -1 ~ 1/ colour: 0 ~ 1/ texture coord: 0 ~ 1
+
+	unsigned int indices[6] = {
+		0, 1, 3,    // 1st triangle
+		1, 2, 3     // 2nd triangle
+	};
+
+	// texture
+	unsigned int texture = NONE;
+
+
+
+	// setting
 	bool isBlockMode;
 
-	// type추가하기; main character, monster, land(map), portal, ...
 
+	// type; main character, monster, land(map), portal, ...
+	std::string type = "Type_Default";
+
+
+	glm::vec3 offset_ratio = glm::vec3(0.f);
+	glm::mat4 mat_model = glm::mat4(1.f);
+	//glm::mat4 trans = glm::mat4(1.f);
+
+	//delete?
 	float x;
 	float y;
 
 	// Actually, half of real width or height value
-	float width;
-	float height;
+	int width;
+	int height;
 
 	bool isOverlapped = false;	// 하나밖에 못담음
-	
+
+
+
 public:
-	Collision(glm::mat4 tr, float w, float h);
-	Collision(glm::mat4 tr, float w, float h, bool b);
+	//Collision();
+	Collision(int w, int h, std::string ct);
+	Collision(glm::mat4 tr, int w, int h, std::string ct);
+	Collision(glm::mat4 tr, int w, int h, std::string ct, bool b);
+
+	void Generate();	// maybe tmp func
+	void SetTextureSize(int w, int h);
 
 	void setBlockMode(bool b);
-	void setTrans(glm::mat4 tr);
-	
+	void setTransform(glm::vec3 offset);	// location
+	void setTransform(int w, int h);	// size
+	void setTransform(glm::vec3 offset, int w, int h);
+	void SetModel(glm::mat4 mat);
+	void LoadCollisionTexture();
+
+	bool getIsBlocked();
+
+	void Draw();
+
 	void checkCollision(Collision c);
-	void resolution();
-		
+	void collide(Collision c);
 
 };

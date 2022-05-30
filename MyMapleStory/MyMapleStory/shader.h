@@ -20,6 +20,7 @@ public:
 	unsigned int ID;
 
 	// Constructor
+	Shader();
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
 
 	// Activate the shader
