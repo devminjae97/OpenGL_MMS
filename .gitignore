@@ -4,3 +4,6 @@ MyMapleStory/MyMapleStory/MyMapleStory.vcxproj
 MyMapleStory/.vs/MyMapleStory/v16/Browse.VC.opendb
 *.lastbuildstate
 MyMapleStory/MyMapleStory/x64/Debug/MyMapleStory.tlog/MyMapleStory.lastbuildstate
+*.ipch
+*.obj
+*.tlog
