@@ -37,6 +37,7 @@ int main() {
     }
     glfwMakeContextCurrent(window);
 
+
     // Call this function to adjust Viewport when user adjust Window size
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -47,7 +48,7 @@ int main() {
         return -1;
     }
 
-
+    glViewport(0, 0, window_width, window_height);
 
     //----------------
     // <Init & Load variables>
@@ -70,7 +71,7 @@ int main() {
 
 
     // Rendering Loop (Frame)
-    std::cout << ">> Begin Rendering Loop\n";
+    std::cout << "Sys >> Begin Rendering Loop\n";
 
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
@@ -90,12 +91,12 @@ int main() {
         for (Entity* e : entities) {
             e->Activate(delta_time);
         }
-
-
+        
+        //main_character->collision->checkCollision(test_structure->collision);
 
 
         // Detect collision 
-
+        // tmp code
 
 
 
@@ -119,7 +120,7 @@ int main() {
 
 
 
-    std::cout << "Terminate Program\n";
+    std::cout << "Sys >> Terminate Program\n";
 
 
     return 0;
@@ -147,8 +148,19 @@ void Initialise() {
 
 void GenerateEntities() {
 
+    // test
+    //-------------
+    // <Structure>
+    //Structure* test_structure = new Structure(64, 64, "white");
+    test_structure = new Structure(64, 64, "white");
+    test_structure->SetPosition(256, -32);
+    test_structure->SetColliderBlockMode(true);
+    entities.push_back(test_structure);
+
+
     // MainCharacter
-    MainCharacter* main_character = new MainCharacter();
+    //MainCharacter* main_character = new MainCharacter();
+    main_character = new MainCharacter();
     entities.push_back(main_character);
 
 }

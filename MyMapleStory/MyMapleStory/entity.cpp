@@ -7,7 +7,7 @@
 Entity::Entity(int w, int h, std::string ct) {
     transform.width = w;
     transform.height = h;
-    collision = new Collision(10, h, ct);
+    collision = new Collision(w, h, ct);    // ¹è°æÀº?
 
     Generate();
 }
@@ -72,18 +72,15 @@ void Entity::SetColliderTransform(glm::mat4 mt, int w, int h) {
     //collision->SetSize(w, h);
 }
 
-void Entity::LoadAnimator(std::string actor_name) {
+void Entity::SetColliderBlockMode(bool b) {
+    collision->setBlockMode(b);
+}
 
+void Entity::LoadAnimator(std::string actor_name) {
     animator = new Animator(actor_name);
 }
 
 void Entity::Activate(double dt) {
-
-    // calculate matrix; translate * scale
-
-
-
-
     shader->use();
     shader->setMat4("model", mat_model);
 
@@ -93,14 +90,33 @@ void Entity::Activate(double dt) {
 
     // draw collider
     if (!Global::isHideCollision)
-        collision->Draw(/*position*/);
+        collision->Draw();
 }
 
-void Entity::SetModel(glm::mat4 mat) {
-    mat_model = mat;
+void Entity::SetModel(glm::mat4 trans, glm::mat4 scale) {
+    mat_model = trans * scale;
+
+    glm::vec4 vec = trans * glm::vec4(1.0f);
+
 }
 
 void Entity::SetPosition(float x, float y) {
     transform.position.x = x;
     transform.position.y = y;
+
+    glm::mat4 trans = glm::translate(glm::mat4(1.f), glm::vec3((float)x / Global::window_width * 2, (float)y / Global::window_height * 2, 0.f));
+    glm::mat4 scale = transform.is_flip ? glm::scale(glm::mat4(1.f), glm::vec3(-1.f, 1.f, 1.f)) : glm::mat4(1.f);
+    SetModel(trans, scale);
+
+
+    // move collision
+    collision->SetPosition(x, y);
+}
+
+void Entity::AddPosition(float x, float y) {
+    SetPosition(transform.position.x + x, transform.position.y + y);
+}
+
+void Entity::Flip(bool b) {
+    transform.is_flip = b;
 }

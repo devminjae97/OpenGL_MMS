@@ -5,21 +5,27 @@ MainCharacter::MainCharacter() : Actor(128, 128, "Type_MainCharacter") {
     shader = new Shader("Shaders/characterShader.vs", "Shaders/characterShader.fs");
 
     Entity::LoadAnimator("Anim_MainCharacter");
-    Entity::collision->setTransform(glm::vec3(0.f, -64.f, 0.f), 32, 64);
+    Entity::collision->setTransform(glm::vec3(0.f, -32.f, 0.f), 32, 64);
 
 }
-
-void MainCharacter::SetColliderTransform(glm::mat4 mt, int w, int h) {
-    Actor::Entity::SetColliderTransform(mt, w, h);
-}
-
 
 void MainCharacter::Activate(double dt) {
     Entity::Activate(dt);
 
     GetKeyInput(dt);
-}
+    CheckCollision();
 
+
+
+
+
+
+    // Last
+    SavePrevPosition();
+
+    //test
+    //printf("main character: (%.0f, %.0f)\n", transform.position.x, transform.position.y);
+}
 
 void MainCharacter::GetKeyInput(double dt) {
     if (glfwGetKey(Global::window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -27,7 +33,6 @@ void MainCharacter::GetKeyInput(double dt) {
     }
 
     Walk(dt);
-
 }
 
 void MainCharacter::Walk(double dt) {
@@ -37,14 +42,13 @@ void MainCharacter::Walk(double dt) {
         if (!is_key_left_pressed) {
             if (!is_key_right_pressed) {
                 is_key_right_pressed = true;
-                FaceRight(true);
+                Entity::Flip(true);
 
                 if (!is_jumping)
-                    Entity::animator->SwitchAnimation("Anim_Walk");// SetAnim(ANIM_WALK);
+                    Entity::animator->SwitchAnimation("Anim_Walk");
             }
 
-            mat_translate = glm::translate(mat_translate, vec_walk_unit * (float)dt * mainCharacter_speed * axis_horizontal_right);
-            Entity::SetModel(mat_translate * mat_scale);
+            Entity::AddPosition(vec_walk_unit.x *Global::window_width* (float)dt * mainCharacter_speed * axis_horizontal_right, 0);
         }
 
         // axis
@@ -58,7 +62,7 @@ void MainCharacter::Walk(double dt) {
             is_key_right_pressed = false;
 
             if (!is_jumping)
-                Entity::animator->SwitchAnimation("Anim_Idle");// SetAnim(ANIM_IDLE);
+                Entity::animator->SwitchAnimation("Anim_Idle");
         }
 
         // axis
@@ -73,14 +77,13 @@ void MainCharacter::Walk(double dt) {
         if (!is_key_right_pressed) {
             if (!is_key_left_pressed) {
                 is_key_left_pressed = true;
-                FaceRight(false);
+                Entity::Flip(false);
 
                 if (!is_jumping)
-                    Entity::animator->SwitchAnimation("Anim_Walk");// SetAnim(ANIM_WALK);
+                    Entity::animator->SwitchAnimation("Anim_Walk");
             }
 
-            mat_translate = glm::translate(mat_translate, vec_walk_unit * (float)dt * mainCharacter_speed * -axis_horizontal_left);
-            Entity::SetModel(mat_translate * mat_scale);
+            Entity::AddPosition(vec_walk_unit.x * Global::window_width * (float)dt * mainCharacter_speed * -axis_horizontal_left, 0);
         }
 
         // axis
@@ -95,7 +98,7 @@ void MainCharacter::Walk(double dt) {
             is_key_left_pressed = false;
 
             if (!is_jumping)
-                Entity::animator->SwitchAnimation("Anim_Idle");// SetAnim(ANIM_IDLE);
+                Entity::animator->SwitchAnimation("Anim_Idle");
         }
 
         // axis
@@ -106,36 +109,95 @@ void MainCharacter::Walk(double dt) {
     }
 
 
-    // move
-    if (is_key_right_pressed || is_key_left_pressed) {
-        glm::vec4 vec = mat_translate * glm::vec4(1.0f);
 
-        Entity::SetPosition(vec.x * Global::window_width, vec.y * Global::window_height);
+    //test------------------------
+    // UP
+    if (glfwGetKey(Global::window, GLFW_KEY_UP) == GLFW_PRESS) {
+        Entity::AddPosition(0, vec_walk_unit.x * Global::window_width * (float)dt * mainCharacter_speed);
+    }
 
-        collision->SetModel(mat_translate);
+    // DOWN
+    if (glfwGetKey(Global::window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        Entity::AddPosition(0, vec_walk_unit.x * Global::window_width * (float)dt * -mainCharacter_speed);
     }
 
 
-    //float axis_horizontal = axis_horizontal_right - axis_horizontal_left; // or L-R
-    //if (axis_horizontal != 0.f) {
 
-    //    mat_translate = glm::translate(mat_translate, vec_walk_unit * (float)dt * mainCharacter_speed * axis_horizontal);
-    //    Entity::SetModel(mat_translate * mat_scale);
 
-    //    //std::cout << "Axis Horizontal R: " << axis_horizontal_right << "\n";
-    //}
-
-    //printf("pos: (%f, %f)\n", transform.position.x, transform.position.y);
+    //printf("pos: (%.1f, %.1f)\n", transform.position.x, transform.position.y);
 
 }
 
-void MainCharacter::FaceRight(bool b) {
-    if (!is_facing_right && b) {
-        is_facing_right = true;
-        mat_scale = glm::scale(glm::mat4(1.f), glm::vec3(-1.f, 1.f, 1.f));
+
+
+
+void MainCharacter::SavePrevPosition() {
+    prev_x = transform.position.x;
+    prev_y = transform.position.y;
+}
+
+void MainCharacter::CheckCollision() {
+
+
+    for (Collision* c : Collision::collisions) {
+        if (c->GetType() == "Type_Structure") {
+
+            if (collision->checkCollision(c)) {
+                CollisionResolution(c);
+            }
+        }
     }
-    else if (is_facing_right && !b) {
-        is_facing_right = false;
-        mat_scale = glm::mat4(1.f);
+
+}
+
+void MainCharacter::CollisionResolution(Collision* c) {
+
+    float overlapped_amount_x;
+    float overlapped_amount_y;
+
+    // -----------------------------------------------------------------------<1>
+    // in c's view, main character is ...
+    //bool is_on_right = transform.position.x > c->GetPosition().x ? true : false;
+    //bool is_on_top = transform.position.y > c->GetPosition().y ? true : false;
+
+
+    //// Right, Top
+    //if (is_on_right && is_on_top) {
+
+    //}
+    //// Left, Top
+    //else if (!is_on_right && is_on_top) {
+
+    //}
+    //// Left, Bottom
+    //else if (!is_on_right && !is_on_top) {
+
+    //}
+    //// Right, Bottom
+    //else if (is_on_right && !is_on_top) {
+
+    //}
+
+
+    // -----------------------------------------------------------------------<2>
+    int vertical = collision->GetPosition().x > c->GetPosition().x ? 1 : -1;
+    int horizontal = collision->GetPosition().y > c->GetPosition().y ? 1 : -1;
+
+    overlapped_amount_x = (collision->GetPosition().x - vertical * collision->GetScale().x/2) - (c->GetPosition().x + vertical * c->GetScale().x/2);
+    overlapped_amount_y = (collision->GetPosition().y - horizontal * collision->GetScale().y/2) - (c->GetPosition().y + vertical * c->GetScale().y/2);
+
+
+    //overlapped amount 값 이상함
+
+    std::cout << "OLM: " << overlapped_amount_x << " // " << overlapped_amount_y << "\n";
+
+    if (abs(overlapped_amount_x) > abs(overlapped_amount_y)) {
+        ;// SetPosition()
     }
+    else {
+
+    }
+
+
+    
 }

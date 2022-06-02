@@ -31,6 +31,7 @@ public:
 
 	void LoadMainCharacterTextures();
 	void LoadTextures(std::string target_path, std::string anim_name);
+	void LoadTexture(std::string target_path);
 
 	void InitAnim();	// set idle animation
 	void SwitchAnimation(std::string anim_name);

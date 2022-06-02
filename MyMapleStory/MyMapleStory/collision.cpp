@@ -2,6 +2,7 @@
 
 
 unsigned int Collision::count = 0;
+std::vector<Collision*> Collision::collisions = std::vector<Collision*>();
 
 //Collision::Collision() {}
 
@@ -15,6 +16,8 @@ Collision::Collision(int w, int h, std::string ct) {
 	Generate();
 	setTransform(w, h);
 	LoadCollisionTexture();
+
+	collisions.push_back(this);
 }
 
 // delete?
@@ -69,6 +72,29 @@ void Collision::Generate() {
 	glEnableVertexAttribArray(2);
 }
 
+void Collision::Draw() {
+	if (texture != NONE) {
+		// line
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		glm::mat4 trans = glm::translate(mat_model, offset_ratio);
+
+		shader->use();
+		shader->setMat4("model", trans);
+
+		glBindVertexArray(VAO);
+		if(is_overlapped)
+			glBindTexture(GL_TEXTURE_2D, texture_hit);
+		else
+			glBindTexture(GL_TEXTURE_2D, texture);
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		// 복원
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
 void Collision::SetTextureSize(int w, int h) {
 
 	float width_ratio = (float)w / Global::window_width;
@@ -93,11 +119,9 @@ void Collision::SetTextureSize(int w, int h) {
 
 // 정리 필요 settexturesize <--> settransform
 
-void Collision::setTransform(glm::vec3 offset) {
-	//glm::vec3 pos = tr * glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	//x = pos.x;
-	//y = pos.y;
-	offset_ratio = glm::vec3(offset.x / Global::window_width, offset.y / Global::window_height, 0.f);
+void Collision::SetOffset(glm::vec3 offset) {
+	this->offset = offset;
+	offset_ratio = glm::vec3(offset.x / Global::window_width * 2, offset.y / Global::window_height * 2, 0.f);
 }
 
 void Collision::setTransform(int w, int h) {
@@ -107,8 +131,16 @@ void Collision::setTransform(int w, int h) {
 }
 
 void Collision::setTransform(glm::vec3 offset, int w, int h) {
-	setTransform(offset);
+	SetOffset(offset);
 	setTransform(w, h);
+}
+
+void Collision::SetPosition(float x, float y) {
+	this->x = x + offset.x;
+	this->y = y + offset.y;
+		
+    glm::mat4 trans = glm::translate(glm::mat4(1.f), glm::vec3((float)x / Global::window_width * 2, (float)y / Global::window_height * 2, 0.f));
+	SetModel(trans);
 }
 
 void Collision::SetModel(glm::mat4 mat) {
@@ -117,6 +149,7 @@ void Collision::SetModel(glm::mat4 mat) {
 
 void Collision::LoadCollisionTexture() {
 	texture = TextureLoader::LoadTexture(std::string("Resources/test/collision_full.png"));
+	texture_hit = TextureLoader::LoadTexture(std::string("Resources/test/collision_hit.png"));
 }
 
 void Collision::setBlockMode(bool b) {
@@ -127,45 +160,67 @@ bool Collision::getIsBlocked() {
 	return isBlockMode;
 }
 
-void Collision::Draw(/*position*/) {
-	if (texture != NONE) {
-		// line
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		shader->use();
-
-		glm::mat4 trans = glm::translate(mat_model, offset_ratio);
-		shader->setMat4("model", trans);
-
-		glBindVertexArray(VAO);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		// 복원
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
+std::string Collision::GetType() {
+	return type;
 }
 
-void Collision::checkCollision(Collision c) {
-	if (abs(x - c.x) < width + c.width && abs(y - c.y) < height + c.height) {
+glm::vec2 Collision::GetPosition() {
+	return glm::vec2(x, y);
+}
+
+glm::vec2 Collision::GetScale() {
+	return glm::vec2(width, height);
+}
+
+bool Collision::checkCollision(Collision* c) {
+	if (abs(x - c->x) < width/2 + c->width/2 && abs(y - c->y) < height/2 + c->height/2) {
 		// call once
-		if (!isOverlapped) {
-			//std::cout << "COLLISION::OVERLAP_BEGIN\n";
-			isOverlapped = true;
+		if (!is_overlapped) {
+			std::cout << "COLLISION::OVERLAP_BEGIN\n";
+			is_overlapped = true;
+
+
 
 			//test
-			if (this->type == "Type_MainCharacter" && c.getIsBlocked()) {
+			printf("(x, y) = (%.0f, %.0f), (c.x, c.y) = (%.0f, %.0f), width = %d, c.width = %d\n", x, y, c->x, c->y, width/2, c->width/2);
+			if (this->type == "Type_MainCharacter" && c->getIsBlocked()) {
 				collide(c);
 			}
-		}
-	}
-	else if (isOverlapped) {
-		//std::cout << "COLLISION::OVERLAP_END\n";
 
-		isOverlapped = false;
+			std::cout << "-> return true\n";
+			//return true;
+		}
+		return true;
 	}
+	else if (is_overlapped) {
+		std::cout << "COLLISION::OVERLAP_END\n";
+
+		is_overlapped = false;
+
+		return false;
+	}
+	return false;
 }
 
-void Collision::collide(Collision c) {
+bool Collision::CheckCollisionByType(std::string type) {
+	for (Collision* c : collisions) {
+		if (c->type == type) {
 
+			if (checkCollision(c)) {
+				//
+			}
+
+			//test
+			//std::cout << "Test Check Collision By Type\n";
+		}
+	}
+
+
+
+	//tmp
+	return  false;
+}
+
+void Collision::collide(Collision* c) {
+	//std::cout << "++++++++++++++++++\n";
 }

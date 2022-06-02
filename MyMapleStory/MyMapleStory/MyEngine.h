@@ -5,6 +5,7 @@
 
 #include "entity.h"
 #include "maincharacter.h"
+#include "structure.h"
 
 
 
@@ -24,7 +25,7 @@ const char* window_name = "MMS";
 
 GLFWwindow* window;
 int window_width = 1024;
-int window_height = 512;
+int window_height = 768;
 
 
 
@@ -43,6 +44,9 @@ void Clock();
 // <Manage Entities>
 std::vector<Entity*> entities;
 
+//test
+Structure* test_structure;
+MainCharacter* main_character;
 
 
 

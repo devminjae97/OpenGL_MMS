@@ -3,7 +3,7 @@
 
 Animator::Animator(std::string str) {
     if (str == "Anim_MainCharacter") {
-        //std::cout << "Animator::Animator(main character)\n";
+        std::cout << "Animator::Animator(main character)\n";
         LoadMainCharacterTextures();
     }
     else if (str == "Anim_Mob") {
@@ -55,6 +55,31 @@ void Animator::LoadTextures(std::string target_path, std::string anim_name) {
 
 }
 
+void Animator::LoadTexture(std::string target_path/*, std::string anim_name*/) {
+
+    int texture_width, texture_height, nrChannels;
+    Animation anim;
+    unsigned int tmp;
+
+
+    // Single sprite
+    anim = Animation();
+    tmp = TextureLoader::LoadTexture(target_path);
+    if (tmp != NONE) {
+        anim.textures.push_back(tmp);
+        anim.animation_name = "Texture";    // get name from parameter
+        anim.switching_time = NONE;    // test
+        animation_pool.push_back(anim);
+
+        // Init
+        InitAnim();
+    }
+    else {
+        std::cout << "ERROR::ANIMATION::LOAD_FALIED\n--path: " << target_path << "\n";
+    }
+
+}
+
 void Animator::InitAnim() {
     if (animation_pool.size() > 0) {
         current_animation = animation_pool[0];
@@ -88,7 +113,10 @@ void Animator::SwitchAnimation(std::string anim_name) {
 }
 
 void Animator::PlayAnimation(double dt) {
-    if (current_animation.textures.size() > 0) {
+    if (current_animation.textures.size() == 1) {
+        glBindTexture(GL_TEXTURE_2D, current_animation.textures[0]);
+    }
+    else if (current_animation.textures.size() > 1) {
         delta_time += dt;
 
 

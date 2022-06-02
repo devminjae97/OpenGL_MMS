@@ -8,12 +8,16 @@
 
 class Entity {
 
-public:
+protected:
 
 	struct Transform {
 		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 		unsigned width = 128;
 		unsigned height = 128;
+
+
+		//test
+		bool is_flip = false;
 	}transform;
 
 	glm::mat4 mat_model = glm::mat4(1.f);
@@ -25,7 +29,6 @@ public:
 
 	// Collider
 	bool isColliderOn;
-	Collision* collision;
 
 
 	// GL variables
@@ -51,6 +54,10 @@ public:
 	Animator* animator;
 
 public:
+
+	Collision* collision;
+
+
 	//Entity();
 	Entity(int w, int h, std::string ct);
 	Entity(glm::mat4 tr, int w, int h, std::string ct);
@@ -58,14 +65,21 @@ public:
 	void Generate();	// maybe tmp func
 	void SetTextureSize(int w, int h);
 	void SetColliderTransform(glm::mat4 mt, int w, int h);
+	void SetColliderBlockMode(bool b);
+
 
 	void LoadAnimator(std::string actor_name);
 
-	void SetModel(glm::mat4 mat);//?
+	void SetModel(glm::mat4 trans, glm::mat4 scale);	// -> private
 	void SetPosition(float x, float y);
+	void AddPosition(float x, float y);
+	void Flip(bool b);
+	
+
 
 	//virtual void Activate() = 0;
 	virtual void Activate(double dt);
+
 
 };
 

@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
 #define	ERROR	-9999
 #define	NONE	-1000
 
@@ -28,4 +29,5 @@ public:
 	//---------------
 	// <Dev Setting>
 	static bool isHideCollision;
+
 };

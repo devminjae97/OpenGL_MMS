@@ -7,12 +7,19 @@
 
 class Collision {
 
+
+	//-------------------------
+	// static
 private:
-	// need to initialize in collision manager or wherever.
 	static unsigned int count;
 
-	int id;
+public:
+	static std::vector<Collision*> collisions;
 
+
+private:
+
+	int id;
 
 	// Shader
 	Shader* shader;
@@ -34,6 +41,7 @@ private:
 
 	// texture
 	unsigned int texture = NONE;
+	unsigned int texture_hit = NONE;
 
 
 
@@ -44,7 +52,7 @@ private:
 	// type; main character, monster, land(map), portal, ...
 	std::string type = "Type_Default";
 
-
+	glm::vec3 offset = glm::vec3(0.f);
 	glm::vec3 offset_ratio = glm::vec3(0.f);
 	glm::mat4 mat_model = glm::mat4(1.f);
 	//glm::mat4 trans = glm::mat4(1.f);
@@ -57,7 +65,7 @@ private:
 	int width;
 	int height;
 
-	bool isOverlapped = false;	// 하나밖에 못담음
+	bool is_overlapped = false;	// 하나밖에 못담음
 
 
 
@@ -71,17 +79,23 @@ public:
 	void SetTextureSize(int w, int h);
 
 	void setBlockMode(bool b);
-	void setTransform(glm::vec3 offset);	// location
+	void SetOffset(glm::vec3 offset);	// location
 	void setTransform(int w, int h);	// size
 	void setTransform(glm::vec3 offset, int w, int h);
+	void SetPosition(float x, float y);
 	void SetModel(glm::mat4 mat);
 	void LoadCollisionTexture();
 
 	bool getIsBlocked();
+	std::string GetType();
+
+	glm::vec2 GetPosition();
+	glm::vec2 GetScale();
 
 	void Draw();
 
-	void checkCollision(Collision c);
-	void collide(Collision c);
+	bool checkCollision(Collision* c);
+	bool CheckCollisionByType(std::string type);
+	void collide(Collision* c);
 
 };

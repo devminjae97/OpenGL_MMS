@@ -3,12 +3,6 @@
 
 class MainCharacter : public Actor {
 private:
-
-public:
-	MainCharacter();
-
-
-
 	// Input
 	bool is_key_right_pressed = false;
 	bool is_key_left_pressed = false;
@@ -21,20 +15,22 @@ public:
 
 	// Variable for movement
 
-	bool is_facing_right = false;
 	bool is_jumping = false;
-	glm::vec3 vec_walk_unit = glm::vec3(0.0025f, 0, 0);
-	glm::mat4 mat_translate = glm::mat4(1.0f);
-	glm::mat4 mat_scale = glm::mat4(1.0f);
+	glm::vec3 vec_walk_unit = glm::vec3(0.00125f, 0, 0);	// why 0.00125?	-> float 단일로 바꾸기
 
 	// └> Status
-	float mainCharacter_speed = 160;
-	float mainCharacter_jumpPower;
+	float mainCharacter_speed = 160;	// => 160% 
+	float mainCharacter_jumpPower = 123;	// => 123%
 
 
+	// prev frame position
+	float prev_x = 0;
+	float prev_y = 0;
 
 
-	void SetColliderTransform(glm::mat4 mt, int w, int h);
+public:
+	MainCharacter();
+
 
 	void Activate(double dt);
 
@@ -44,8 +40,13 @@ public:
 	void GetKeyInput(double dt);
 
 	void Walk(double dt);
-	void FaceRight(bool b);
 	void Jump();
 	void Attack();
 
+	void SavePrevPosition();
+
+	//------------
+	// test
+	void CheckCollision();
+	void CollisionResolution(Collision* c);
 };
