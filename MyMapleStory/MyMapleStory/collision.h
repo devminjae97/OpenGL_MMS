@@ -96,6 +96,5 @@ public:
 
 	bool checkCollision(Collision* c);
 	bool CheckCollisionByType(std::string type);
-	void collide(Collision* c);
 
 };

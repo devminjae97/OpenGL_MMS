@@ -75,6 +75,17 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
+
+        // Calculate FPS
+        Clock();
+
+        // Limit FPS
+
+
+
+
+
+
         // Input
         //processInput(window);
         //testMove(window, trans);
@@ -104,8 +115,6 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
 
-        // Calculate FPS
-        Clock();
     }
 
 
@@ -151,16 +160,20 @@ void GenerateEntities() {
     // test
     //-------------
     // <Structure>
-    //Structure* test_structure = new Structure(64, 64, "white");
-    test_structure = new Structure(64, 64, "white");
-    test_structure->SetPosition(256, -32);
+    Structure* test_structure = new Structure(64, 64, "white");
+    test_structure->SetPosition(256, 0);
+    test_structure->SetColliderBlockMode(true);
+    entities.push_back(test_structure);
+
+    test_structure = new Structure(512, 1024, "white");
+    test_structure->SetPosition(0, -512 - 32);
     test_structure->SetColliderBlockMode(true);
     entities.push_back(test_structure);
 
 
     // MainCharacter
-    //MainCharacter* main_character = new MainCharacter();
-    main_character = new MainCharacter();
+    MainCharacter* main_character = new MainCharacter();
+
     entities.push_back(main_character);
 
 }

@@ -6,7 +6,7 @@ private:
 	// Input
 	bool is_key_right_pressed = false;
 	bool is_key_left_pressed = false;
-	bool is_key_spacebar_pressed = false;
+	bool is_key_space_pressed = false;
 
 	float axis_horizontal_right = 0;
 	float axis_horizontal_left = 0;
@@ -23,9 +23,9 @@ private:
 	float mainCharacter_jumpPower = 123;	// => 123%
 
 
-	// prev frame position
-	float prev_x = 0;
-	float prev_y = 0;
+	// GroundCheck
+	//Collision* collision_groundchecker;
+	//float offset_y_collision_groundchecker = -38;
 
 
 public:
@@ -43,10 +43,34 @@ public:
 	void Jump();
 	void Attack();
 
-	void SavePrevPosition();
+	void CheckCollision();
+	void CollisionResolution(Collision* other);
+
+
+	//test
+	void SwitchAnimation();	// make it virtual in parent?
+
+	void GroundCheck();
+
+
 
 	//------------
-	// test
-	void CheckCollision();
-	void CollisionResolution(Collision* c);
+	// test physics - do i need to seperate it to another file?
+
+	glm::vec3 velocity = glm::vec3(0.f);
+
+	float terminal_velocity = -675.f; //  22.5px/frame * 30fps
+	float gravity = 2000.f;
+
+	void ApplyGravity(double dt);
+
+	// Tmp
+	void FallResolution();
+
+
+
+
+
+
+
 };

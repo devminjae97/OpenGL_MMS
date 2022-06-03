@@ -173,22 +173,11 @@ glm::vec2 Collision::GetScale() {
 }
 
 bool Collision::checkCollision(Collision* c) {
-	if (abs(x - c->x) < width/2 + c->width/2 && abs(y - c->y) < height/2 + c->height/2) {
+	if (abs(x - c->x) < width / 2 + c->width / 2 && abs(y - c->y) < height / 2 + c->height / 2) {
 		// call once
 		if (!is_overlapped) {
 			std::cout << "COLLISION::OVERLAP_BEGIN\n";
 			is_overlapped = true;
-
-
-
-			//test
-			printf("(x, y) = (%.0f, %.0f), (c.x, c.y) = (%.0f, %.0f), width = %d, c.width = %d\n", x, y, c->x, c->y, width/2, c->width/2);
-			if (this->type == "Type_MainCharacter" && c->getIsBlocked()) {
-				collide(c);
-			}
-
-			std::cout << "-> return true\n";
-			//return true;
 		}
 		return true;
 	}
@@ -216,11 +205,6 @@ bool Collision::CheckCollisionByType(std::string type) {
 	}
 
 
-
 	//tmp
 	return  false;
-}
-
-void Collision::collide(Collision* c) {
-	//std::cout << "++++++++++++++++++\n";
 }

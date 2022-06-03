@@ -44,9 +44,6 @@ void Clock();
 // <Manage Entities>
 std::vector<Entity*> entities;
 
-//test
-Structure* test_structure;
-MainCharacter* main_character;
 
 
 

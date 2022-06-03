@@ -43,7 +43,12 @@ void Animator::LoadMainCharacterTextures() {
 
     // Jump: 1 sprite
     anim = Animation();
-
+    anim.textures = TextureLoader::LoadTextures(path_maincharacter, std::string("avatar"), std::string("jump"));
+    if (anim.textures.size() > 0) {
+        anim.animation_name = "Anim_Jump";
+        anim.switching_time = 99.f;
+        animation_pool.push_back(anim);
+    }
 
 
 
@@ -99,13 +104,16 @@ void Animator::SwitchAnimation(std::string anim_name) {
             break;
         }
         else if (animation_pool[i].animation_name == anim_name) {
-            current_animation = animation_pool[i];
+            if (current_animation.animation_name != anim_name) {
 
-            switching_time = current_animation.switching_time;
-            texture_count = current_animation.textures.size();
+                current_animation = animation_pool[i];
 
-            delta_time = 0;
-            texture_index = 0;
+                switching_time = current_animation.switching_time;
+                texture_count = current_animation.textures.size();
+
+                delta_time = 0;
+                texture_index = 0;
+            }
 
             break;
         }
