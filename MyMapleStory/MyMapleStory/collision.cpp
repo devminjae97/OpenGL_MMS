@@ -9,42 +9,16 @@ std::vector<Collision*> Collision::collisions = std::vector<Collision*>();
 Collision::Collision(int w, int h, std::string ct) {
 	id = count++;
 
-	isBlockMode = false;
+	is_block_mode = false;
 	type = ct;
 
 
 	Generate();
-	setTransform(w, h);
+	SetTransform(w, h);
 	LoadCollisionTexture();
 
 	collisions.push_back(this);
 }
-
-// delete?
-//Collision::Collision(glm::mat4 tr, int w, int h, std::string ct) {
-//	id = count++;
-//
-//	isBlockMode = false;
-//	type = ct;
-//
-//	//printf("create collision :: id:%d\n", id);
-//
-//	//setTransform(tr, w, h);
-//	Generate();
-//	LoadCollisionTexture();
-//}
-//
-//// delete?	+bool
-//Collision::Collision(glm::mat4 tr, int w, int h, std::string ct, bool b) {
-//	id = count++;
-//
-//	isBlockMode = b;
-//	type = ct;
-//
-//	//printf("create collision :: id:%d\n", id);
-//
-//	//setTransform(tr, w, h);
-//}
 
 void Collision::Generate() {
 
@@ -83,7 +57,7 @@ void Collision::Draw() {
 		shader->setMat4("model", trans);
 
 		glBindVertexArray(VAO);
-		if(is_overlapped)
+		if(overlapped_collisions.size() > 0)
 			glBindTexture(GL_TEXTURE_2D, texture_hit);
 		else
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -124,15 +98,15 @@ void Collision::SetOffset(glm::vec3 offset) {
 	offset_ratio = glm::vec3(offset.x / Global::window_width * 2, offset.y / Global::window_height * 2, 0.f);
 }
 
-void Collision::setTransform(int w, int h) {
+void Collision::SetTransform(int w, int h) {
 	width = w;
 	height = h;
 	SetTextureSize(w, h);
 }
 
-void Collision::setTransform(glm::vec3 offset, int w, int h) {
+void Collision::SetTransform(glm::vec3 offset, int w, int h) {
 	SetOffset(offset);
-	setTransform(w, h);
+	SetTransform(w, h);
 }
 
 void Collision::SetPosition(float x, float y) {
@@ -152,12 +126,12 @@ void Collision::LoadCollisionTexture() {
 	texture_hit = TextureLoader::LoadTexture(std::string("Resources/test/collision_hit.png"));
 }
 
-void Collision::setBlockMode(bool b) {
-	isBlockMode = b;
+void Collision::SetBlockMode(bool b) {
+	is_block_mode = b;
 }
 
-bool Collision::getIsBlocked() {
-	return isBlockMode;
+bool Collision::GetIsBlockMode() {
+	return is_block_mode;
 }
 
 std::string Collision::GetType() {
@@ -172,39 +146,27 @@ glm::vec2 Collision::GetScale() {
 	return glm::vec2(width, height);
 }
 
-bool Collision::checkCollision(Collision* c) {
+
+bool Collision::CheckCollision(Collision* c) {
 	if (abs(x - c->x) < width / 2 + c->width / 2 && abs(y - c->y) < height / 2 + c->height / 2) {
 		// call once
-		if (!is_overlapped) {
+
+		std::vector<Collision*>::iterator it;
+		it = std::find(overlapped_collisions.begin(), overlapped_collisions.end(), c);
+		if (it == overlapped_collisions.end()) {
 			std::cout << "COLLISION::OVERLAP_BEGIN\n";
-			is_overlapped = true;
+			overlapped_collisions.push_back(c);
 		}
 		return true;
 	}
-	else if (is_overlapped) {
-		std::cout << "COLLISION::OVERLAP_END\n";
-
-		is_overlapped = false;
-
+	else {
+		std::vector<Collision*>::iterator it;
+		it = std::find(overlapped_collisions.begin(), overlapped_collisions.end(), c);
+		if (it != overlapped_collisions.end()) {
+			std::cout << "COLLISION::OVERLAP_END\n";
+			overlapped_collisions.erase(it);
+		}
 		return false;
 	}
 	return false;
-}
-
-bool Collision::CheckCollisionByType(std::string type) {
-	for (Collision* c : collisions) {
-		if (c->type == type) {
-
-			if (checkCollision(c)) {
-				//
-			}
-
-			//test
-			//std::cout << "Test Check Collision By Type\n";
-		}
-	}
-
-
-	//tmp
-	return  false;
 }

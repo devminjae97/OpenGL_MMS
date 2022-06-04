@@ -25,7 +25,7 @@ private:
 	Shader* shader;
 
 	// GL variables
-	unsigned  int VBO, VAO, EBO;
+	unsigned int VBO, VAO, EBO;
 
 	float vertices[32] = {
 		.5f, .5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,     // RT
@@ -46,7 +46,7 @@ private:
 
 
 	// setting
-	bool isBlockMode;
+	bool is_block_mode;
 
 
 	// type; main character, monster, land(map), portal, ...
@@ -67,26 +67,24 @@ private:
 
 	bool is_overlapped = false;	// 하나밖에 못담음
 
-
+	std::vector<Collision*> overlapped_collisions = std::vector<Collision*>();
 
 public:
 	//Collision();
 	Collision(int w, int h, std::string ct);
-	Collision(glm::mat4 tr, int w, int h, std::string ct);
-	Collision(glm::mat4 tr, int w, int h, std::string ct, bool b);
 
 	void Generate();	// maybe tmp func
 	void SetTextureSize(int w, int h);
 
-	void setBlockMode(bool b);
+	void SetBlockMode(bool b);
 	void SetOffset(glm::vec3 offset);	// location
-	void setTransform(int w, int h);	// size
-	void setTransform(glm::vec3 offset, int w, int h);
+	void SetTransform(int w, int h);	// size
+	void SetTransform(glm::vec3 offset, int w, int h);
 	void SetPosition(float x, float y);
 	void SetModel(glm::mat4 mat);
 	void LoadCollisionTexture();
 
-	bool getIsBlocked();
+	bool GetIsBlockMode();
 	std::string GetType();
 
 	glm::vec2 GetPosition();
@@ -94,7 +92,5 @@ public:
 
 	void Draw();
 
-	bool checkCollision(Collision* c);
-	bool CheckCollisionByType(std::string type);
-
+	bool CheckCollision(Collision* c);
 };

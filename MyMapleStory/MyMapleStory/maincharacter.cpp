@@ -5,18 +5,20 @@ MainCharacter::MainCharacter() : Actor(128, 128, "Type_MainCharacter") {
     shader = new Shader("Shaders/characterShader.vs", "Shaders/characterShader.fs");
 
     Entity::LoadAnimator("Anim_MainCharacter");
-    Entity::collision->setTransform(32, 64);
+    Entity::collision->SetTransform(32, 64);
 
-    //collision_groundchecker = new Collision(28, 4, "Type_GroundChecker");
-    //collision_groundchecker->SetPosition(0, offset_y_collision_groundchecker);
+    collision_groundchecker = new Collision(30, 2, "Type_GroundChecker");
+    collision_groundchecker->SetPosition(0, offset_y_collision_groundchecker);
+}
+
+MainCharacter::~MainCharacter() {
+    std::cout << "Sys >> MainCharacter Destructor\n";
 }
 
 void MainCharacter::Activate(double dt) {
     Entity::Activate(dt);
 
-
-    //collision_groundchecker->SetPosition(transform.position.x, transform.position.y + offset_y_collision_groundchecker);
-    //collision_groundchecker->Draw();
+    GroundCheck();
 
     FallResolution();
 
@@ -34,21 +36,16 @@ void MainCharacter::GetKeyInput(double dt) {
         glfwSetWindowShouldClose(Global::window, true);
     }
 
-    // jump
-    if (glfwGetKey(Global::window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        if (!is_key_space_pressed)
-            is_key_space_pressed = true;
-
-        if (!is_jumping) {
-            is_jumping = true;
-            velocity.y += mainCharacter_jumpPower * 5;
-        }
-    }
-    else if (glfwGetKey(Global::window, GLFW_KEY_SPACE) == GLFW_RELEASE && is_key_space_pressed) {
-        is_key_space_pressed = false;
-    }
-
     Walk(dt);
+    Jump();
+
+
+    // reset position
+    if (glfwGetKey(Global::window, GLFW_KEY_R) == GLFW_PRESS) {
+        SetPosition(0, 0);
+        velocity.y = 0;
+        axis_horizontal = 0;
+    }
 }
 
 void MainCharacter::Walk(double dt) {
@@ -61,25 +58,23 @@ void MainCharacter::Walk(double dt) {
                 Entity::Flip(true);
             }
 
-            Entity::AddPosition(vec_walk_unit.x *Global::window_width* (float)dt * mainCharacter_speed * axis_horizontal_right, 0);
+            // axis
+            if (axis_horizontal < 1.f) {
+                if (is_jumping) {
+                    axis_horizontal += dt * power_accel_axis_horizontal_on_air;
+                }
+                else {
+                    axis_horizontal += dt * power_accel_axis_horizontal;
+                }
+            }
+            else if (axis_horizontal > 1.f)
+                axis_horizontal = 1.f;
         }
-
-        // axis
-        if (axis_horizontal_right < 1.f)
-            axis_horizontal_right += dt * power_accel_axis_horizontal;
-        else if (axis_horizontal_right > 1.f)
-            axis_horizontal_right = 1.f;
     }
     else if (glfwGetKey(Global::window, GLFW_KEY_RIGHT) == GLFW_RELEASE) {
         if (is_key_right_pressed) {
             is_key_right_pressed = false;
         }
-
-        // axis
-        if (axis_horizontal_right > 0.f)
-            axis_horizontal_right -= dt * power_stop_axis_horizontal;
-        else if (axis_horizontal_right < 0.f)
-            axis_horizontal_right = 0.f;
     }
 
     // Left
@@ -90,64 +85,90 @@ void MainCharacter::Walk(double dt) {
                 Entity::Flip(false);
             }
 
-            Entity::AddPosition(vec_walk_unit.x * Global::window_width * (float)dt * mainCharacter_speed * -axis_horizontal_left, 0);
+            // axis
+            if (axis_horizontal > -1.f)
+                if (is_jumping) {
+                    axis_horizontal -= dt * power_accel_axis_horizontal_on_air;
+                }
+                else {
+                    axis_horizontal -= dt * power_accel_axis_horizontal;
+                }
+            else if (axis_horizontal < -1.f)
+                axis_horizontal = -1.f;
         }
-
-        // axis
-        if (axis_horizontal_left < 1.f)
-            axis_horizontal_left += dt * power_accel_axis_horizontal;
-        else if (axis_horizontal_left > 1.f)
-            axis_horizontal_left = 1.f;
 
     }
     else if (glfwGetKey(Global::window, GLFW_KEY_LEFT) == GLFW_RELEASE) {
         if (is_key_left_pressed) {
             is_key_left_pressed = false;
         }
-
-        // axis
-        if (axis_horizontal_left > 0.f)
-            axis_horizontal_left -= dt * power_stop_axis_horizontal;
-        else if (axis_horizontal_left < 0.f)
-            axis_horizontal_left = 0.f;
     }
+
+    //move
+    if (axis_horizontal != 0) {
+        Entity::AddPosition(vec_walk_unit.x * (float)dt * mainCharacter_speed * axis_horizontal, 0);
+    }
+
+    //stop
+
+    if (!is_jumping) {
+        if (is_key_right_pressed && axis_horizontal < 0 || is_key_left_pressed && axis_horizontal > 0) {
+            axis_horizontal = 0;
+        }
+        else if(!is_key_right_pressed && !is_key_left_pressed) {
+            if (abs(axis_horizontal) < 0.1f)
+                axis_horizontal = 0;
+            else if(axis_horizontal > 0)
+                axis_horizontal -= dt * power_stop_axis_horizontal;
+            else if(axis_horizontal < 0)
+                axis_horizontal += dt * power_stop_axis_horizontal;
+        }
+    }
+
+
+
+    //std::cout << "Tmp >> axis_horizontal = " << axis_horizontal << "\n";
+
+
+
 
 
 
     //test------------------------
     // UP
     if (glfwGetKey(Global::window, GLFW_KEY_UP) == GLFW_PRESS) {
-        Entity::AddPosition(0, vec_walk_unit.x * Global::window_width * (float)dt * mainCharacter_speed);
         velocity.y = 0;
     }
 
     // DOWN
     if (glfwGetKey(Global::window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        //Entity::AddPosition(0, vec_walk_unit.x * Global::window_width * (float)dt * -mainCharacter_speed);
-        //test
-        SetPosition(0, 0);
-        velocity.y = 0;
     }
+}
 
+void MainCharacter::Jump() {
+    if (glfwGetKey(Global::window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        if (!is_key_space_pressed)
+            is_key_space_pressed = true;
 
+        if (!is_jumping) {
+            is_jumping = true;
 
-
-    //printf("pos: (%.1f, %.1f)\n", transform.position.x, transform.position.y);
-
+            velocity.y = mainCharacter_jumpPower * 5.5f;
+        }
+    }
+    else if (glfwGetKey(Global::window, GLFW_KEY_SPACE) == GLFW_RELEASE && is_key_space_pressed) {
+        is_key_space_pressed = false;
+    }
 }
 
 void MainCharacter::CheckCollision() {
-
-    // !need to change Collision::CheckCollisionByType!
     for (Collision* c : Collision::collisions) {
-        if (c->GetType() == "Type_Structure") {
-
-            if (c->checkCollision(collision)) {
+        if (c->GetType() == "Type_Structure" && c->GetIsBlockMode()) {
+            if (c->CheckCollision(collision)) {
                 CollisionResolution(c);
             }
         }
     }
-
 }
 
 void MainCharacter::CollisionResolution(Collision* other) {
@@ -169,19 +190,14 @@ void MainCharacter::CollisionResolution(Collision* other) {
     // vertical
     if (overlapped_amount_x > overlapped_amount_y) {
         SetPosition(transform.position.x, pos_other.y + vertical * (scale_other.y / 2 + scale_this.y / 2));
-
         //gravity test
-        if(velocity.y < 0)
-            velocity.y = 0;
-
-        //jump-landing test
-        if (is_jumping && vertical > 0) {
-            is_jumping = false;
-        }
+        //if(velocity.y < 0)
+        velocity.y = 0;
     } 
     // horizontal
     else {
         SetPosition(pos_other.x + horizontal * (scale_other.x / 2 + scale_this.x / 2), transform.position.y);
+        axis_horizontal = 0;
     }
 }
 
@@ -199,7 +215,25 @@ void MainCharacter::SwitchAnimation() {
 }
 
 void MainCharacter::GroundCheck() {
-    float pos_y = collision->GetPosition().y + collision->GetScale().y;
+
+    collision_groundchecker->SetPosition(transform.position.x, transform.position.y + offset_y_collision_groundchecker);
+
+    if(!Global::isHideCollision)
+        collision_groundchecker->Draw();
+
+    for (Collision* c : Collision::collisions) {
+        if (c->GetType() == "Type_Structure" && c->GetIsBlockMode()) {
+            if (collision_groundchecker->CheckCollision(c)) {
+
+                //jump-landing test
+                if (is_jumping && collision->GetPosition().y > c->GetPosition().y) {
+                    is_jumping = false;
+                }
+                return;
+            }
+        }
+    }
+    is_jumping = true;
 }
 
 

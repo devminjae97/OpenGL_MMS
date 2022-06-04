@@ -12,15 +12,12 @@ Entity::Entity(int w, int h, std::string ct) {
     Generate();
 }
 
-// delete?
-//Entity::Entity(glm::mat4 tr, int w, int h, std::string ct) {
-//    transform.width = w;
-//    transform.height = h;
-//	//collision = new Collision(tr, (float) w / Global::window_width, (float) h / Global::window_height, ct);
-//	collision = new Collision(tr, w, h, ct);
-//
-//    Generate();
-//}
+Entity::~Entity() {
+    std::cout << "Sys >> Entity Destructor\n";
+    delete shader;
+    delete animator;
+    delete collision;
+}
 
 void Entity::Generate() {
 
@@ -73,7 +70,7 @@ void Entity::SetColliderTransform(glm::mat4 mt, int w, int h) {
 }
 
 void Entity::SetColliderBlockMode(bool b) {
-    collision->setBlockMode(b);
+    collision->SetBlockMode(b);
 }
 
 void Entity::LoadAnimator(std::string actor_name) {

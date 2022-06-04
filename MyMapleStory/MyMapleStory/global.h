@@ -29,5 +29,6 @@ public:
 	//---------------
 	// <Dev Setting>
 	static bool isHideCollision;
+	static bool is_paused;
 
 };

@@ -73,6 +73,7 @@ int main() {
     // Rendering Loop (Frame)
     std::cout << "Sys >> Begin Rendering Loop\n";
 
+
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
 
@@ -80,8 +81,6 @@ int main() {
         Clock();
 
         // Limit FPS
-
-
 
 
 
@@ -129,7 +128,11 @@ int main() {
 
 
 
-    std::cout << "Sys >> Terminate Program\n";
+    std::cout << "\nSys >> Terminate Program\n\n";
+
+    for (Entity* e : entities) {
+        delete e;
+    }
 
 
     return 0;
@@ -161,14 +164,20 @@ void GenerateEntities() {
     //-------------
     // <Structure>
     Structure* test_structure = new Structure(64, 64, "white");
-    test_structure->SetPosition(256, 0);
+    test_structure->SetPosition(256, 16);
     test_structure->SetColliderBlockMode(true);
     entities.push_back(test_structure);
 
-    test_structure = new Structure(512, 1024, "white");
-    test_structure->SetPosition(0, -512 - 32);
+    test_structure = new Structure(64, 64, "white");
+    test_structure->SetPosition(192, -64);
     test_structure->SetColliderBlockMode(true);
     entities.push_back(test_structure);
+
+    test_structure = new Structure(1024, 128, "white");
+    test_structure->SetPosition(0, -128 - 32);
+    test_structure->SetColliderBlockMode(true);
+    entities.push_back(test_structure);
+
 
 
     // MainCharacter

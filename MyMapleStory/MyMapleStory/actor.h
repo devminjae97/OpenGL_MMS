@@ -16,6 +16,8 @@ private:
 
 public:
 	Actor(int w, int h, std::string ct);
+	~Actor();
+
 	//void LoadAnimator(std::string actor_name);
 	void InitTexture();
 	virtual void Activate(double dt) = 0;

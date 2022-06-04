@@ -60,7 +60,7 @@ public:
 
 	//Entity();
 	Entity(int w, int h, std::string ct);
-	Entity(glm::mat4 tr, int w, int h, std::string ct);
+	virtual ~Entity();
 
 	void Generate();	// maybe tmp func
 	void SetTextureSize(int w, int h);
