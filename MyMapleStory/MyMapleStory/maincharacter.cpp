@@ -13,6 +13,8 @@ MainCharacter::MainCharacter() : Actor(128, 128, "Type_MainCharacter") {
 
 MainCharacter::~MainCharacter() {
     std::cout << "Sys >> MainCharacter Destructor\n";
+
+    delete collision_groundchecker;
 }
 
 void MainCharacter::Activate(double dt) {

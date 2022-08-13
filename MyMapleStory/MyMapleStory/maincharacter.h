@@ -8,7 +8,7 @@ private:
 	bool is_key_left_pressed = false;
 	bool is_key_space_pressed = false;
 
-	float power_accel_axis_horizontal = 8.f;	// 1->1sec, 2->0.5sec
+	float power_accel_axis_horizontal = 16.f;	// 1->1sec, 2->0.5sec
 	float power_accel_axis_horizontal_on_air = .5f;	//
 	float power_stop_axis_horizontal = 6.f;
 

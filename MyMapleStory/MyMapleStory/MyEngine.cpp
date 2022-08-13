@@ -64,7 +64,6 @@ int main() {
 
 
 
-
     // wireframe mode
     if (isWireFrameModeOn)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -76,6 +75,8 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
+    //test
+        //std::cout << "current time : " << glfwGetTime() << "\n";
 
         // Calculate FPS
         Clock();
@@ -179,10 +180,11 @@ void GenerateEntities() {
     entities.push_back(test_structure);
 
 
+    // <Mob>
 
-    // MainCharacter
+
+    // <MainCharacter>
     MainCharacter* main_character = new MainCharacter();
-
     entities.push_back(main_character);
 
 }

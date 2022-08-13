@@ -86,8 +86,9 @@ void Entity::Activate(double dt) {
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     // draw collider
-    if (!Global::isHideCollision)
+    if (!Global::isHideCollision) {
         collision->Draw();
+    }
 }
 
 void Entity::SetModel(glm::mat4 trans, glm::mat4 scale) {
