@@ -41,7 +41,7 @@ private:
 public:
 	Mob(int w, int h, std::string name, bool is_jump_enabled);
 	~Mob();
-	void Activate(double dt);	
+	void Update(double dt);
 	void EnableJump();
 
 	void SwitchMotion(double dt); 

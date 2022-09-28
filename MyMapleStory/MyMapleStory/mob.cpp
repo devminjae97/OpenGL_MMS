@@ -15,8 +15,8 @@ Mob::~Mob() {
     delete collision_groundchecker;
 }
 
-void Mob::Activate(double dt) {
-    Entity::Activate(dt);
+void Mob::Update(double dt) {
+    Entity::Update(dt);
 
     GroundCheck();
 

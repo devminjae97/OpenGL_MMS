@@ -19,7 +19,9 @@ public:
 	~Actor();
 
 	//void LoadAnimator(std::string actor_name);
-	void InitTexture();
-	virtual void Activate(double dt) = 0;
+	//void InitTexture();
+
+	// update : Somegthing might be shared btw mob and charcter...
+	//virtual void Update(double dt) = 0;
 
 };

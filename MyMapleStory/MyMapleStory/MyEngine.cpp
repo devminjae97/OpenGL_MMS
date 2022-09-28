@@ -4,7 +4,7 @@
 // Dev Note
 /*****
  *
- * # OpenGL로 MapleStory 구현 #
+ * # MapleStory with OpenGL#
  *
  *
  * ########################
@@ -12,8 +12,14 @@
  * ########################
  *
  *
- * 참고) https://heinleinsgame.tistory.com/3?category=757483
+ * Conference) https://heinleinsgame.tistory.com/3?category=757483
  *
+ * 
+ * to be modified
+ * Global => WorldSetting
+ * Activate => Update
+ * Seperate Update and Render 
+ * 
  */
 
 int main() {
@@ -55,35 +61,17 @@ int main() {
     Initialise();
     GenerateEntities();
 
-
-
-
-
-
-
-
-
-
     // wireframe mode
     if (isWireFrameModeOn)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
-    // Rendering Loop (Frame)
-    std::cout << "Sys >> Begin Rendering Loop\n";
-
-
+    // Update & Rendering Loop (Frame)
     while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
-    //test
-        //std::cout << "current time : " << glfwGetTime() << "\n";
 
         // Calculate FPS
         Clock();
-
-        // Limit FPS
-
-
 
 
         // Input
@@ -100,7 +88,7 @@ int main() {
 
 
         for (Entity* e : entities) {
-            e->Activate(delta_time);
+            e->Update(delta_time);
         }
         
         //main_character->collision->checkCollision(test_structure->collision);
@@ -114,30 +102,17 @@ int main() {
         // Swap Buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
-
     }
 
 
     // Terminate all resources
     glfwTerminate();
 
-
-
-
-
-
-
-
-
-    std::cout << "\nSys >> Terminate Program\n\n";
-
     for (Entity* e : entities) {
         delete e;
     }
 
-
     return 0;
-
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -156,7 +131,6 @@ void Initialise() {
     //-----------------
     // Local variables
     delta_time = 0;
-
 }
 
 void GenerateEntities() {
@@ -186,6 +160,9 @@ void GenerateEntities() {
     // <MainCharacter>
     MainCharacter* main_character = new MainCharacter();
     entities.push_back(main_character);
+}
+
+void GameLoop() {
 
 }
 
@@ -195,12 +172,12 @@ void Clock() {
 
     frame_count++;
 
-    double interval = current_time - last_time;
+    double elapsed = current_time - last_time;
     delta_time = current_time - last_time_in_frame;
 
     // Update fps per 1 second
-    if (interval > 1) {
-        std::string buf = window_name + std::string(" | ") + std::to_string((int)(frame_count / interval)) + std::string(" fps");
+    if (elapsed >= 1) {
+        std::string buf = window_name + std::string(" | ") + std::to_string((int)(frame_count / elapsed)) + std::string(" fps");
 
         glfwSetWindowTitle(window, buf.c_str());
 

@@ -32,7 +32,7 @@ public:
 	MainCharacter();
 	~MainCharacter();
 
-	void Activate(double dt);
+	void Update(double dt);
 
 	//-------------
 	// <Key Input>
@@ -43,7 +43,6 @@ public:
 	void Jump();
 	void Attack();
 
-	void Skill_DoubleJump();
 
 
 

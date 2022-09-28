@@ -16,7 +16,7 @@
 // <Dev setting & variables>
 const bool isWireFrameModeOn = false;
 const float clearColour[] = { 0.52f, 0.49f, 0.53f };
-const bool isHideCollision = true;
+const bool isHideCollision = false;
 
 
 //-----------------------------
@@ -51,6 +51,7 @@ std::vector<Entity*> entities;
 // <Function>
 void Initialise();
 void GenerateEntities();
+void GameLoop();
 
 
 

@@ -7,7 +7,7 @@ MainCharacter::MainCharacter() : Actor(128, 128, "Type_MainCharacter") {
     Entity::LoadAnimator("Anim_MainCharacter");
     Entity::collision->SetTransform(32, 64);
 
-    collision_groundchecker = new Collision(30, 2, "Type_GroundChecker");
+    collision_groundchecker = new Collision(/*30*/ 31.6f, 2, "Type_GroundChecker");
     collision_groundchecker->SetPosition(0, offset_y_collision_groundchecker);
 }
 
@@ -17,8 +17,8 @@ MainCharacter::~MainCharacter() {
     delete collision_groundchecker;
 }
 
-void MainCharacter::Activate(double dt) {
-    Entity::Activate(dt);
+void MainCharacter::Update(double dt) {
+    Entity::Update(dt);
 
     GroundCheck();
 

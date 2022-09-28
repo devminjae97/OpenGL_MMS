@@ -68,7 +68,7 @@ public:
 	void SetColliderBlockMode(bool b);
 
 
-	void LoadAnimator(std::string actor_name);
+	void LoadAnimator(std::string actor_type);
 
 	void SetModel(glm::mat4 trans, glm::mat4 scale);	// -> private
 	void SetPosition(float x, float y);
@@ -77,8 +77,8 @@ public:
 	
 
 
-	//virtual void Activate() = 0;
-	virtual void Activate(double dt);
+	virtual void Update(double dt);
+	//virtual void Render(double dt);
 
 
 };

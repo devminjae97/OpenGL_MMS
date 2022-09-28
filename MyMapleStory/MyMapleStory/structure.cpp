@@ -6,7 +6,7 @@ Structure::Structure(int w, int h, std::string name) : Object(w, h, "Type_Struct
 	LoadSingleTexture(name);
 }
 
-void Structure::Activate(double dt) {
+void Structure::Update(double dt) {
 	// tmp code
 
 	shader->use();

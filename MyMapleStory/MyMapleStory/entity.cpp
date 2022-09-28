@@ -13,7 +13,7 @@ Entity::Entity(int w, int h, std::string ct) {
 }
 
 Entity::~Entity() {
-    std::cout << "Sys >> Entity Destructor\n";
+    //std::cout << "Sys >> Entity Destructor\n";
     delete shader;
     delete animator;
     delete collision;
@@ -73,11 +73,11 @@ void Entity::SetColliderBlockMode(bool b) {
     collision->SetBlockMode(b);
 }
 
-void Entity::LoadAnimator(std::string actor_name) {
-    animator = new Animator(actor_name);
+void Entity::LoadAnimator(std::string actor_type) {
+    animator = new Animator(actor_type);
 }
 
-void Entity::Activate(double dt) {
+void Entity::Update(double dt) {
     shader->use();
     shader->setMat4("model", mat_model);
 
