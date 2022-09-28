@@ -23,5 +23,6 @@ public:
 
 	// update : Somegthing might be shared btw mob and charcter...
 	//virtual void Update(double dt) = 0;
+	virtual void Render(double dt);
 
 };

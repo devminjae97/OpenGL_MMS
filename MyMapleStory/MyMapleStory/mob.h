@@ -2,7 +2,7 @@
 
 #include "actor.h"
 
-class Mob : Actor {
+class Mob : public Actor {
 
 private:
 
@@ -41,9 +41,9 @@ private:
 public:
 	Mob(int w, int h, std::string name, bool is_jump_enabled);
 	~Mob();
-	void Update(double dt);
-	void EnableJump();
+	virtual void Update(double dt) override;
 
+	void EnableJump();
 	void SwitchMotion(double dt); 
 	void Walk(double dt);
 	void Jump();

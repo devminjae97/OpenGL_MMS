@@ -7,7 +7,7 @@ private:
 public:
 	Structure(int w, int h, std::string name);
 
-	void Update(double dt);
+	//void Update(double dt);
 	//void Render(double dt);
 
 

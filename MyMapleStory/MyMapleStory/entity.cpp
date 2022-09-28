@@ -76,7 +76,7 @@ void Entity::SetColliderBlockMode(bool b) {
 void Entity::LoadAnimator(std::string actor_type) {
     animator = new Animator(actor_type);
 }
-
+/*
 void Entity::Update(double dt) {
     shader->use();
     shader->setMat4("model", mat_model);
@@ -90,7 +90,7 @@ void Entity::Update(double dt) {
         collision->Draw();
     }
 }
-
+*/
 void Entity::SetModel(glm::mat4 trans, glm::mat4 scale) {
     mat_model = trans * scale;
 

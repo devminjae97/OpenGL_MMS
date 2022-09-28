@@ -77,8 +77,8 @@ public:
 	
 
 
-	virtual void Update(double dt);
-	//virtual void Render(double dt);
+	virtual void Update(double dt) = 0;
+	virtual void Render(double dt) = 0;
 
 
 };

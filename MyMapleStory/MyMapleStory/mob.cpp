@@ -4,11 +4,22 @@ Mob::Mob(int w, int h, std::string name, bool is_jump_enabled) : Actor(w, h, "Ty
 
     shader = new Shader("Shaders/characterShader.vs", "Shaders/characterShader.fs");
 
-    Entity::LoadAnimator("Anim_MainCharacter");
-    Entity::collision->SetTransform(32, 64);
+    //Entity::LoadAnimator("Anim_Mob");
+    // need to move to factory....
+    animator = new Animator("Anim_Mob");
+    animator->LoadTextures("Resources/mob/" + name + "/", name);
+
+    // test value
+    Entity::collision->SetTransform(32, 48);
+    Entity::collision->SetOffset(glm::vec3(0, -8, 0));
 
     if (is_jump_enabled)
         EnableJump();
+
+
+
+    //test
+    animator->SwitchAnimation("Anim_Idle");
 }
 
 Mob::~Mob() {
@@ -16,13 +27,13 @@ Mob::~Mob() {
 }
 
 void Mob::Update(double dt) {
-    Entity::Update(dt);
+    //Entity::Update(dt);
 
-    GroundCheck();
+    //GroundCheck();
 
     FallResolution();
 
-    ApplyGravity(dt);
+    //ApplyGravity(dt);
     //CheckCollision();
 
     //SwitchMotion();
@@ -33,7 +44,7 @@ void Mob::Update(double dt) {
 void Mob::EnableJump() {
     bool is_jump_enabled = true;
 
-    collision_groundchecker = new Collision(30, 2, "Type_GroundChecker");
+    collision_groundchecker = new Collision(31.5, 2, "Type_GroundChecker");
     collision_groundchecker->SetPosition(0, offset_y_collision_groundchecker);
 
     // Generate Anim_Jump ?

@@ -32,7 +32,7 @@ public:
 	MainCharacter();
 	~MainCharacter();
 
-	void Update(double dt);
+	virtual void Update(double dt) override;
 
 	//-------------
 	// <Key Input>

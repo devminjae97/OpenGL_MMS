@@ -58,6 +58,18 @@ void Animator::LoadMainCharacterTextures() {
 
 void Animator::LoadTextures(std::string target_path, std::string anim_name) {
 
+    int texture_width, texture_height, nrChannels;
+    Animation anim;
+
+
+    // Idle: n sprites
+    anim = Animation();
+    anim.textures = TextureLoader::LoadTextures(target_path, anim_name, std::string("idle"));
+    if (anim.textures.size() > 0) {
+        anim.animation_name = "Anim_Idle";
+        anim.switching_time = 0.57f;
+        animation_pool.push_back(anim);
+    }
 }
 
 void Animator::LoadTexture(std::string target_path/*, std::string anim_name*/) {

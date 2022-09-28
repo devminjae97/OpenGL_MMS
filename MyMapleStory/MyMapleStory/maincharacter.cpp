@@ -18,7 +18,7 @@ MainCharacter::~MainCharacter() {
 }
 
 void MainCharacter::Update(double dt) {
-    Entity::Update(dt);
+    //Entity::Update(dt);
 
     GroundCheck();
 
@@ -202,7 +202,6 @@ void MainCharacter::CollisionResolution(Collision* other) {
         axis_horizontal = 0;
     }
 }
-
 
 void MainCharacter::SwitchAnimation() {
     if (is_jumping) {

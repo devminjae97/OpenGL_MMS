@@ -6,9 +6,13 @@
 #include "entity.h"
 #include "maincharacter.h"
 #include "structure.h"
+#include "mob.h"
 
 
-
+/*
+* Does Setting variable need to move to global.h ? (= World Setting file)
+* 
+*/
 
 
 
@@ -17,6 +21,8 @@
 const bool isWireFrameModeOn = false;
 const float clearColour[] = { 0.52f, 0.49f, 0.53f };
 const bool isHideCollision = false;
+
+const int MS_PER_UPDATE = 16;	// about 60 fps
 
 
 //-----------------------------
@@ -27,17 +33,6 @@ GLFWwindow* window;
 int window_width = 1024;
 int window_height = 768;
 
-
-
-//--------------------------
-// <Clock; fps, delta time>
-int frame_count = 0;
-double current_time = 0;
-double last_time = 0;
-double last_time_in_frame = 0;
-double delta_time;
-
-void Clock();
 
 
 //-------------------

@@ -66,43 +66,7 @@ int main() {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
-    // Update & Rendering Loop (Frame)
-    while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
-
-
-        // Calculate FPS
-        Clock();
-
-
-        // Input
-        //processInput(window);
-        //testMove(window, trans);
-
-
-        // --Rendering Codes--
-        // Clear the screen
-        glClearColor(clearColour[0], clearColour[1], clearColour[2], 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-
-
-
-        for (Entity* e : entities) {
-            e->Update(delta_time);
-        }
-        
-        //main_character->collision->checkCollision(test_structure->collision);
-
-
-        // Detect collision 
-        // tmp code
-
-
-
-        // Swap Buffers
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    GameLoop();
 
 
     // Terminate all resources
@@ -127,10 +91,6 @@ void Initialise() {
     Global::window_height = window_height;
 
     Global::isHideCollision = isHideCollision;
-
-    //-----------------
-    // Local variables
-    delta_time = 0;
 }
 
 void GenerateEntities() {
@@ -155,7 +115,9 @@ void GenerateEntities() {
 
 
     // <Mob>
-
+    Mob* test_mob = new Mob(128, 128, "OrangeMushroom", false);
+    test_mob->SetPosition(-128, -62);
+    entities.push_back(test_mob);
 
     // <MainCharacter>
     MainCharacter* main_character = new MainCharacter();
@@ -163,27 +125,70 @@ void GenerateEntities() {
 }
 
 void GameLoop() {
+    double prev_time = glfwGetTime();
+    double elapsed = 0.0;
+    int frame_count = 0;
 
-}
+    // Update & Rendering Loop (Frame)
+    while (!glfwWindowShouldClose(window)) {    // Check if the window was closed
 
-void Clock() {
+        //------------------
+        // <Calculate time>
+        double current_time = glfwGetTime();
+        double delta_time = current_time - prev_time;
+        prev_time = current_time;
 
-    current_time = glfwGetTime();
+        // Calculate FPS
+        elapsed += delta_time;
+        frame_count += 1;
+        if (elapsed >= 1.0) {
+            std::string buf = window_name + std::string(" | ") + std::to_string((int)(frame_count / elapsed)) + std::string(" fps");
 
-    frame_count++;
+            glfwSetWindowTitle(window, buf.c_str());
 
-    double elapsed = current_time - last_time;
-    delta_time = current_time - last_time_in_frame;
+            elapsed = 0;
+            frame_count = 0;
+        }
 
-    // Update fps per 1 second
-    if (elapsed >= 1) {
-        std::string buf = window_name + std::string(" | ") + std::to_string((int)(frame_count / elapsed)) + std::string(" fps");
 
-        glfwSetWindowTitle(window, buf.c_str());
 
-        frame_count = 0;
-        last_time = current_time;
+        //------------------
+        // <Process Input>
+        //processInput(window);
+        
+
+
+
+        //------------------
+        // <Fixed Update>
+        for (Entity* e : entities) {
+            e->Update(delta_time);
+        }
+
+
+        //-------------------
+        // <Render>
+
+        // Clear the screen
+        glClearColor(clearColour[0], clearColour[1], clearColour[2], 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Render
+        for (Entity* e : entities) {
+            e->Render(delta_time);
+        }
+
+
+        //main_character->collision->checkCollision(test_structure->collision);
+
+
+        // Detect collision 
+        // tmp code
+
+
+
+        // Swap Buffers
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
-
-    last_time_in_frame = current_time;
 }
