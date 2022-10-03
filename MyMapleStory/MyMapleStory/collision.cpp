@@ -1,5 +1,9 @@
 #include "collision.h"
 
+/******************
+* Old version!
+* Not used anymore!
+******************/
 
 unsigned int Collision::count = 0;
 std::vector<Collision*> Collision::collisions = std::vector<Collision*>();

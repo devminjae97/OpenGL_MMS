@@ -76,7 +76,7 @@ public:
 	void Flip(bool b);
 	
 
-
+	//virtual void Awake() = 0;
 	virtual void Update(double dt) = 0;
 	virtual void Render(double dt) = 0;
 

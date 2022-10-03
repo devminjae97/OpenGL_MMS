@@ -1,30 +1,28 @@
 #pragma once
 
-#include "global.h"
+#include "component.h"
 #include "shader.h"
-#include "texture_loader.h"
 
-
-/******************
-* Old version!
-* Not used anymore!
-******************/
-
-class Collision {
-
-
-	//-------------------------
-	// static
+class Collider : public Component {
+	//-----------------------------------
+	// <Static>
 private:
-	static unsigned int count;
-
-public:
-	static std::vector<Collision*> collisions;
+	static std::vector<Collider*> colliders;
 
 
-private:
+	/*
+	
+	do i need to seperate overlap and collision?
+	
+	*/
 
-	int id;
+
+
+
+
+
+	//-----------------------------------
+	// <Member>
 
 	// Shader
 	Shader* shader;
@@ -49,20 +47,18 @@ private:
 	unsigned int texture_hit = NONE;
 
 
-
 	// setting
 	bool is_block_mode;
 
 
 	// type; main character, monster, land(map), portal, ...
-	std::string type = "Type_Default";
+	std::string type = "Type_Default";	// tag?
 
 	glm::vec3 offset = glm::vec3(0.f);
 	glm::vec3 offset_ratio = glm::vec3(0.f);
 	glm::mat4 mat_model = glm::mat4(1.f);
 	//glm::mat4 trans = glm::mat4(1.f);
 
-	//delete?
 	float x;
 	float y;
 
@@ -70,22 +66,41 @@ private:
 	int width;
 	int height;
 
-	bool is_overlapped = false;	// 하나밖에 못담음
+	std::vector<Collider*> overlapped_collisions = std::vector<Collider*>();
 
-	std::vector<Collision*> overlapped_collisions = std::vector<Collision*>();
+
+
+
+
+
+
+
+
+public:
+	Collider(std::string name) : Component(name) {};
+
+public:
+	virtual void Awake() override;
+	virtual void Update() override;
+
+
+private:
+	std::string tag = "default";	// enum?
+public:
+	std::string GetTag() const;
+
 
 public:
 	//Collision();
-	Collision(int w, int h, std::string ct);
+	//Collider(int w, int h, std::string ct);
 
 	void Generate();	// maybe tmp func
 	void SetTextureSize(int w, int h);
 
 	void SetBlockMode(bool b);
-	void SetOffset(glm::vec3 offset);	// location
-	void SetTransform(int w, int h);	// size
-	void SetTransform(glm::vec3 offset, int w, int h);
-	void SetPosition(float x, float y);
+	void SetOffset(glm::vec3 offset);	// offset location
+	void SetScale(int w, int h);	// size
+	void SetPosition(float x, float y);	// == entity position
 	void SetModel(glm::mat4 mat);
 	void LoadCollisionTexture();
 
@@ -95,7 +110,23 @@ public:
 	glm::vec2 GetPosition();
 	glm::vec2 GetScale();
 
-	void Draw();
 
-	bool CheckCollision(Collision* c);
+	// to where?
+	bool isUpdatable = true;	// 단어가 이게 맞나?
+
+
+
+
+
+	//bool CheckCollision(std::string tag);
+	
+	
+	bool CheckCollision(Collider* c);
+
+
+
+	// Basic functions
+	virtual void Awake() override;
+	virtual void Update() override;
+	void Draw();	// rename to render?
 };

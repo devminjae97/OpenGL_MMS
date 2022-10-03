@@ -1,0 +1,37 @@
+# collider
+제일 중요한 쟁점
+
+- collider의 충돌 판정은 언제 이뤄지는가?
+-- 전체 루프의 업데이트에서 스태틱 함수로 호출?
+	>> 이게 제일 편리해보이긴함
+-- 또는 각 엔티티의 업데이트에서 컴포넌트를 업데이트를 할 때?
+	>> 통일성 측면에선 이게 맞는거 같긴함
+	e.g., 
+	for(Component* comp : components){
+		comp->Update(dt);
+	}
+	...
+-- 아니면 필요한 곳에서만 충돌 판정하기
+	>> 통일성은 떨어지고 특정 엔티티마다 따로 작성해야하지만  연산이 줄어듦
+	e.g.,
+	메인캐릭터는 모든 collider에 대해 충돌 판정
+	몬스터는 ground에 대해서만 충돌 판정
+	스킬은 몬스터에 대해서만 충돌 판정
+-- -- ue4에서 tick 막아두는 것처럼 update가 필요없는 collider는 bool값으로 꺼두는건 어떰?
+	>> 이게 좋을듯..?
+
+
+
+
+- collider의 충돌 판정에 따라 ground와의 상호 작용(rigidbody)는 언제 이뤄지는가?
+-> 이건 각 엔티티가 아닌 rigidbody안에서 연산이 되야할텐데... 어찌 하지요..?
+-- 만약 충돌한 other collider가 blockmode인 경우 owner->rigidbody->resolutionCollision(...) 이렇게..?
+
+
+///////////////////////////////////////////////////////
+내가 사용하는 컴포넌트 종류와 업데이트가 필요한지?
+- collider << 필요? (충돌 감지)
+- rigidbody << 필요 (velocity, addForce(), gravity, collisionResolution() 적용 등)
+- animator << 필요 (sprite 바꾸는 일)
+- sprite(texture) << 불필요 (render에서 적용)
+
