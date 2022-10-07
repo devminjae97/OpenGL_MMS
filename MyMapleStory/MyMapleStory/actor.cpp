@@ -23,5 +23,3 @@ void Actor::Render(double dt) {
         collision->Draw();
     }
 }
-
-

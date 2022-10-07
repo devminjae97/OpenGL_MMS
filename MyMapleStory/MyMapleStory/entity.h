@@ -5,21 +5,21 @@
 #include "shader.h"
 #include "animator.h"
 
-
+class Component;
+class Collider;
 class Entity {
 
-protected:
-
+public:
 	struct Transform {
 		glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 		unsigned width = 128;
 		unsigned height = 128;
 
-
-		//test
 		bool is_flip = false;
 	}transform;
 
+
+protected:
 	glm::mat4 mat_model = glm::mat4(1.f);
 
 	// Shader
@@ -53,6 +53,7 @@ protected:
 	// Animator
 	Animator* animator;
 
+
 public:
 
 	Collision* collision;
@@ -61,6 +62,11 @@ public:
 	//Entity();
 	Entity(int w, int h, std::string ct);
 	virtual ~Entity();
+
+	//virtual void Awake() = 0;
+	virtual void Update(double dt) = 0;
+	virtual void Render(double dt) = 0;
+	virtual void OnOverlap(const Collider* c) {};
 
 	void Generate();	// maybe tmp func
 	void SetTextureSize(int w, int h);
@@ -74,12 +80,22 @@ public:
 	void SetPosition(float x, float y);
 	void AddPosition(float x, float y);
 	void Flip(bool b);
-	
-
-	//virtual void Awake() = 0;
-	virtual void Update(double dt) = 0;
-	virtual void Render(double dt) = 0;
 
 
+	// Components
+private:
+	std::map<std::string, Component*> components;
+
+public:
+	void AddComponent(Component* comp);
+
+	// template은 헤더와 cpp파일 분리작성 ㄴㄴ
+	// 분리할거면 cpp를 include 해야함
+	template<class tComp>
+	tComp* GetComponent(const std::string compName) {
+		if (!components.count(compName))
+			return nullptr;
+
+		return dynamic_cast<tComp*>(components.at(compName));
+	}
 };
-

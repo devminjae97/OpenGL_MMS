@@ -35,3 +35,5 @@
 - animator << 필요 (sprite 바꾸는 일)
 - sprite(texture) << 불필요 (render에서 적용)
 
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+comp 순서는 animator -> texture순으로?

@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "component.h"
 
 //Entity::Entity() {
 //	collision = Collision(glm::mat4(1.f), 0, 0, "empty");
@@ -117,4 +118,12 @@ void Entity::AddPosition(float x, float y) {
 
 void Entity::Flip(bool b) {
     transform.is_flip = b;
+}
+
+void Entity::AddComponent(Component* comp) {
+    if (components.count(comp->GetName()))
+        return;
+
+    comp->SetOwner(this);
+    components.emplace(comp->GetName(), comp);
 }

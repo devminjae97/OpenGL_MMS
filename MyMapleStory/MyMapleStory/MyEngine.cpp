@@ -178,7 +178,6 @@ void GameLoop() {
             e->Render(delta_time);
         }
 
-
         //main_character->collision->checkCollision(test_structure->collision);
 
 

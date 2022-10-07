@@ -1,4 +1,5 @@
 #include "maincharacter.h"
+#include "rigidbody.h"
 
 MainCharacter::MainCharacter() : Actor(128, 128, "Type_MainCharacter") {
     // mc (width, height) = (128, 128)
@@ -29,8 +30,6 @@ void MainCharacter::Update(double dt) {
     CheckCollision();
 
     SwitchAnimation();
-    //test
-    //printf("main character: (%.0f, %.0f)\n", transform.position.x, transform.position.y);
 }
 
 void MainCharacter::GetKeyInput(double dt) {
@@ -109,7 +108,15 @@ void MainCharacter::Walk(double dt) {
     //move
     if (axis_horizontal != 0) {
         Entity::AddPosition(vec_walk_unit.x * (float)dt * mainCharacter_speed * axis_horizontal, 0);
+        // above is old version
+
+        // below is new version
+        /*
+        GetComponent<RigidBody>("rigidbody")->AddForce(1.28f * mainCharacter_speed * axis_horizontal);  // 1.28 : walk unit
+        */
     }
+
+
 
     //stop
 
